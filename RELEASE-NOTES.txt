@@ -1,0 +1,40 @@
+
+
+                      ForkLabs JavaXPCOM, Build 20100904
+                                Release Notes
+
+
+INTRODUCTION
+
+    This library is contains the basic skeleton to make a web crawler using
+    the mozilla browser inside a SWT shell. The crawler can control the
+    navigation and has access to the underlying DOM rendered by the browser.
+
+
+USAGE
+
+    The crawler is expected to be subclassed to include the control and
+    data mining mechanisms. There is a console example class in src/test/java
+    that fires up a browser, navigates to the project page and explores the
+    main tabs (Project Home, Downloads, Wiki, ...).
+
+
+LIMITATIONS
+
+    The distribution includes a version of SWT and XULRunner for Windows. If
+    you are to use this library on another operating system, you will have to
+    install your own version of SWT and XULRunner and re-link the dependency
+    in the POM.
+
+    * http://www.eclipse.org/swt/
+    * http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/
+
+    Also, as with any SWT application, you will have to access the content of
+    the underlying DOM inside the SWT thread, usually using the instance
+    method Crawler#runOnSWTThread().
+
+
+NEW FEATURES IN VERSION 20100904
+
+   o The crawler itself.
+   o A XPCOM node inspector.

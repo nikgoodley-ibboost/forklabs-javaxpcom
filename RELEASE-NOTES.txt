@@ -34,7 +34,12 @@ LIMITATIONS
     method Crawler#runOnSWTThread().
 
 
-NEW FEATURES IN VERSION 20100904
+NEW FEATURES IN VERSION 2010XXXX
+
+   o Permission has been given to use class DisplayManager
+
+
+VERSION 20100904
 
    o The crawler itself.
    o A XPCOM node inspector.

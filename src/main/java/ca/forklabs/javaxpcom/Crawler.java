@@ -401,7 +401,12 @@ public abstract class Crawler {
 // Class methods
 //---------------------------
 
-   public static void setupXULRunner(String gre_home) {
+   /**
+    * Sets up the XULRunner so that crawlers can be used.
+    * @param   the location of the XULRunner binaries.
+    * @exception   IllegalStateException   if the location does not exist.
+    */
+   public static void setupXULRunner(String gre_home) throws IllegalStateException {
       try {
          gre_home = new File(gre_home).getCanonicalPath();
          System.setProperty("org.eclipse.swt.browser.XULRunnerPath", gre_home); //$NON-NLS-1$

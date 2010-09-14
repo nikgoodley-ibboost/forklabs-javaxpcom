@@ -4,13 +4,15 @@ import java.io.Console;
 import ca.forklabs.javaxpcom.Crawler;
 import org.eclipse.swt.widgets.Shell;
 import org.mozilla.interfaces.nsIDOMHTMLCollection;
-import org.mozilla.interfaces.nsIDOMHTMLDivElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableCellElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableRowElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 
+import static ca.forklabs.javaxpcom.util.XPCOMConverter.asTable;
+import static ca.forklabs.javaxpcom.util.XPCOMConverter.asTableCell;
+import static ca.forklabs.javaxpcom.util.XPCOMConverter.asTableRow;
 import static ca.forklabs.javaxpcom.util.XPCOMInspector.inspect;
 
 import java.io.IOException;
@@ -42,26 +44,6 @@ public class ProjectPageCrawler extends Crawler {
 // Instance methods
 //---------------------------
 
-   protected nsIDOMHTMLTableElement asTable(nsIDOMNode node) {
-      nsIDOMHTMLTableElement table = (nsIDOMHTMLTableElement) node.queryInterface(nsIDOMHTMLTableElement.NS_IDOMHTMLTABLEELEMENT_IID);
-      return table;
-      }
-
-   protected nsIDOMHTMLTableRowElement asTableRow(nsIDOMNode node) {
-      nsIDOMHTMLTableRowElement row = (nsIDOMHTMLTableRowElement) node.queryInterface(nsIDOMHTMLTableRowElement.NS_IDOMHTMLTABLEROWELEMENT_IID);
-      return row;
-      }
-
-   protected nsIDOMHTMLTableCellElement asTableCell(nsIDOMNode node) {
-      nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) node.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
-      return cell;
-      }
-
-   protected nsIDOMHTMLDivElement asDiv(nsIDOMNode node) {
-      nsIDOMHTMLDivElement div = (nsIDOMHTMLDivElement) node.queryInterface(nsIDOMHTMLDivElement.NS_IDOMHTMLDIVELEMENT_IID);
-      return div;
-      }
-
 //  <th onclick="if (!cancelBubble) _go('/p/forklabs-javaxpcom/');">
 //    <div class="tab active">
 //      <div class="round4"></div>
@@ -74,21 +56,20 @@ public class ProjectPageCrawler extends Crawler {
 //  </th>
    protected String exploreTableCell(nsIDOMHTMLTableCellElement cell) {
       nsIDOMNode anchor = cell.getElementsByTagName("a").item(0L);
-      nsIDOMNode text = anchor.getFirstChild();
-      String value = text.getNodeValue();
+      String value = this.getTextFrom(anchor);
       return value;
       }
 
    protected void exploreMainMenu() {
       nsIDOMNode node = this.getElementById("mt");
-      nsIDOMHTMLTableElement table = this.asTable(node);
+      nsIDOMHTMLTableElement table = asTable(node);
 
       System.out.println("=== Inspecting the table node ===");
       inspect(table);
 
    // at the time of writing there was only one row
       nsIDOMHTMLCollection rows = table.getRows();
-      nsIDOMHTMLTableRowElement row = this.asTableRow(rows.item(0L));
+      nsIDOMHTMLTableRowElement row = asTableRow(rows.item(0L));
 
       System.out.println("=== Inspecting the table row node ===");
       inspect(row);
@@ -96,7 +77,7 @@ public class ProjectPageCrawler extends Crawler {
       System.out.println("=== Listing the menu ===");
       nsIDOMNodeList cells = row.getElementsByTagName("th");
       for (long i = 0, len = cells.getLength(); i < len; i++) {
-         nsIDOMHTMLTableCellElement cell = this.asTableCell(cells.item(i));
+         nsIDOMHTMLTableCellElement cell = asTableCell(cells.item(i));
          String text = this.exploreTableCell(cell);
          System.out.println("Menu #" + (i+1) + " is " + text);
          }

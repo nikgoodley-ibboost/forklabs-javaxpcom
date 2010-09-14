@@ -453,7 +453,7 @@ public abstract class Crawler {
 
    /**
     * Sets up the XULRunner so that crawlers can be used.
-    * @param   the location of the XULRunner binaries.
+    * @param   gre_home   the location of the XULRunner binaries.
     * @exception   IllegalStateException   if the location does not exist.
     */
    public static void setupXULRunner(String gre_home) throws IllegalStateException {

@@ -78,8 +78,8 @@ public class XPCOMConverter {
       }
 
    /**
-    * Query the {@code nsIDOMHTMLHeadingElement} interface ({@code <h1>) ...
-    * {@code <h6} from the node.
+    * Query the {@code nsIDOMHTMLHeadingElement} interface ({@code <h1>} ...
+    * {@code <h6>}) from the node.
     * @param   node   the node to convert.
     * @exception   XPCOMException   if the node is not a heading.
     */

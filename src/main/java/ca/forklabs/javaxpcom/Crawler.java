@@ -21,6 +21,7 @@
 package ca.forklabs.javaxpcom;
 
 import java.io.File;
+import java.io.InterruptedIOException;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
@@ -241,9 +242,9 @@ public abstract class Crawler {
             }
          }
       catch (InterruptedException ie) {
-// BUG : better error handling, convert to IOException???
-// BUG : use class InterruptedIOException everywhere
-         throw new RuntimeException(ie);
+         InterruptedIOException iioe = new InterruptedIOException();
+         iioe.initCause(ie);
+         throw iioe;
          }
 
       if (has_timed_out) {
@@ -284,10 +285,20 @@ public abstract class Crawler {
     */
    @SuppressWarnings("hiding")
    protected nsIDOMDocument getDocument() {
-      Browser browser = this.getBrowser();
-      nsIWebBrowser web_browser = (nsIWebBrowser) browser.getWebBrowser();
-      nsIDOMWindow window = web_browser.getContentDOMWindow();
-      nsIDOMDocument document = window.getDocument();
+      final nsIDOMDocument[] outs = new nsIDOMDocument[1];
+
+      this.runOnSWTThread(new Runnable() {
+         @Override
+         public void run() {
+            Browser browser = Crawler.this.getBrowser();
+            nsIWebBrowser web_browser = (nsIWebBrowser) browser.getWebBrowser();
+            nsIDOMWindow window = web_browser.getContentDOMWindow();
+            nsIDOMDocument document = window.getDocument();
+            outs[0] = document;
+            }
+         });
+
+      nsIDOMDocument document = outs[0];
       return document;
       }
 

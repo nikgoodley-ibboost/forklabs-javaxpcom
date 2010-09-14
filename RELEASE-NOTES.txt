@@ -41,6 +41,9 @@ NEW FEATURES IN VERSION 20100913
    o Added a method in Crawler to change the title of the enclosing Shell
    o Added a method in Crawler to get the text of a node
    o Added a Converter class with static methods for easy calling
+   o Made Crawler::getDocument() SWT-thread-safe
+   o Fixed the exception if interrupted while loading, it is now an
+     InterruptedIOException from RuntimeException
 
 
 VERSION 20100904

@@ -34,9 +34,13 @@ LIMITATIONS
     method Crawler#runOnSWTThread().
 
 
-NEW FEATURES IN VERSION 2010XXXX
+NEW FEATURES IN VERSION 20100913
 
    o Permission has been given to use class DisplayManager
+   o Fixed a bug in the logging of Crawler::navigateTo()
+   o Added a method in Crawler to change the title of the enclosing Shell
+   o Added a method in Crawler to get the text of a node
+   o Added a Converter class with static methods for easy calling
 
 
 VERSION 20100904

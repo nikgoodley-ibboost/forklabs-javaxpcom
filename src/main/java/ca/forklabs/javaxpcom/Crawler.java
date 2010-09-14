@@ -36,6 +36,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIWebBrowser;
 import es.ladyr.ladyrbrowser.impl.DisplayManager;
@@ -262,7 +264,7 @@ public abstract class Crawler {
       final String destination = url;
       this.runOnSWTThread(new Runnable() {
          public void run() {
-            info(getLocalizedString(GOING_TO));
+            info(getLocalizedString(GOING_TO, destination));
             Browser browser = Crawler.this.getBrowser();
             browser.setUrl(destination);
             }
@@ -299,6 +301,54 @@ public abstract class Crawler {
       nsIDOMDocument document = this.getDocument();
       nsIDOMElement element = document.getElementById(id);
       return element;
+      }
+
+
+//---------------------------
+// Other instance methods
+//---------------------------
+
+   /**
+    * Sets the title of the browser's frame.
+    * @param   title   the title.
+    */
+   public void setBrowserTitle(String title) {
+      final String text = title;
+      this.runOnSWTThread(new Runnable() {
+         public void run() {
+            @SuppressWarnings("hiding")
+            Display display = Crawler.this.getDisplay();
+            Shell shell = display.getActiveShell();
+            if (null != shell) {
+               shell.setText(text);
+               }
+            }
+         });
+      }
+
+   /**
+    * Gets the text of the node.
+    * @param   node   the node.
+    * @return   the text.
+    */
+   protected String getTextFrom(nsIDOMNode node) {
+      StringBuilder sb = new StringBuilder();
+
+      int type = node.getNodeType();
+      if (nsIDOMNode.TEXT_NODE == type) {
+         String text = node.getNodeValue();
+         sb.append(text);
+         }
+
+      nsIDOMNodeList children = node.getChildNodes();
+      for (long i = 0, len = children.getLength(); i < len; i++) {
+         nsIDOMNode child = children.item(i);
+         String text = this.getTextFrom(child);
+         sb.append(text);
+         }
+
+      String text = sb.toString();
+      return text;
       }
 
 
@@ -418,7 +468,7 @@ public abstract class Crawler {
       }
 
 
- //---------------------------
+//---------------------------
 // Logger methods
 //---------------------------
 

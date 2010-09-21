@@ -22,6 +22,7 @@ package ca.forklabs.javaxpcom.util;
 
 import org.mozilla.interfaces.nsIDOMHTMLAnchorElement;
 import org.mozilla.interfaces.nsIDOMHTMLDivElement;
+import org.mozilla.interfaces.nsIDOMHTMLElement;
 import org.mozilla.interfaces.nsIDOMHTMLFormElement;
 import org.mozilla.interfaces.nsIDOMHTMLHeadingElement;
 import org.mozilla.interfaces.nsIDOMHTMLInputElement;
@@ -38,6 +39,9 @@ public class XPCOMConverter {
 // Constructors
 //---------------------------
 
+   /**
+    * Open constructor for converter subclasses.
+    */
    protected XPCOMConverter() {
    // nothing
       }
@@ -46,6 +50,17 @@ public class XPCOMConverter {
 //---------------------------
 // Conversion class methods
 //---------------------------
+
+   /**
+    * Query the {@code nsIDOMHTMLElement} interface from the node.
+    * @param   node   the node to convert.
+    * @exception   XPCOMException   if the node is not an anchor.
+    */
+   public static nsIDOMHTMLElement asHTMLElement(nsIDOMNode node) {
+      nsIDOMHTMLElement element = (nsIDOMHTMLElement) node.queryInterface(nsIDOMHTMLElement.NS_IDOMHTMLELEMENT_IID);
+      return element;
+      }
+
 
    /**
     * Query the {@code nsIDOMHTMLAnchorElement} interface from the node.

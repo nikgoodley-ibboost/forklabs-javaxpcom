@@ -93,13 +93,13 @@
   </build>
 
   <dependencies>
-  
+
     <dependency>
       <groupId>org.eclipse.swt</groupId>
       <artifactId>SWT</artifactId>
-      <version>3.4.2</version>
+      <version>3.650</version>
       <scope>system</scope>
-      <systemPath>${tools.dir}/swt-3.4.2/swt.jar</systemPath>
+      <systemPath>${tools.dir}/swt-3.650/swt.jar</systemPath>
     </dependency>
 
     <dependency>

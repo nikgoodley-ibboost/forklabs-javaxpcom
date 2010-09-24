@@ -83,7 +83,7 @@ public class ProjectPageCrawler extends Crawler {
          }
       }
 
-   public void showOff() throws IOException {
+   public void showOff() throws IOException, InterruptedException {
       String url = "http://code.google.com/p/forklabs-javaxpcom/";
       this.navigateTo(url);
 
@@ -93,6 +93,14 @@ public class ProjectPageCrawler extends Crawler {
             ProjectPageCrawler.this.exploreMainMenu();
             }
          });
+
+      Thread.sleep(3000L);
+
+      this.minimizeBrowser();
+
+      Thread.sleep(3000L);
+
+      this.restoreBrowser();
       }
 
 

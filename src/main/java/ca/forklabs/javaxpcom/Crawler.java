@@ -232,6 +232,7 @@ public abstract class Crawler {
          if (has_timed_out) {
             info(getLocalizedString(TOO_LONG));
             this.runOnSWTThread(new Runnable() {
+               @Override
                public void run() {
                   Browser browser = Crawler.this.getBrowser();
                   browser.stop();
@@ -264,6 +265,7 @@ public abstract class Crawler {
 
       final String destination = url;
       this.runOnSWTThread(new Runnable() {
+         @Override
          public void run() {
             info(getLocalizedString(GOING_TO, destination));
             Browser browser = Crawler.this.getBrowser();
@@ -326,13 +328,38 @@ public abstract class Crawler {
    public void setBrowserTitle(String title) {
       final String text = title;
       this.runOnSWTThread(new Runnable() {
+         @Override
          public void run() {
-            @SuppressWarnings("hiding")
-            Display display = Crawler.this.getDisplay();
-            Shell shell = display.getActiveShell();
-            if (null != shell) {
-               shell.setText(text);
-               }
+            Shell shell = Crawler.this.getShell();
+            shell.setText(text);
+            }
+         });
+      }
+
+   /**
+    * Minimizes the shell enclosing the crawler. It is the opposite of
+    * {@link #restoreBrowser()}.
+    */
+   public void minimizeBrowser() {
+      this.runOnSWTThread(new Runnable() {
+         @Override
+         public void run() {
+            Shell shell = Crawler.this.getShell();
+            shell.setMinimized(true);
+            }
+         });
+      }
+
+   /**
+    * Restores the shell enclosing the crawler. It is the opposite of
+    * {@link #minimizeBrowser()}.
+    */
+   public void restoreBrowser() {
+      this.runOnSWTThread(new Runnable() {
+         @Override
+         public void run() {
+            Shell shell = Crawler.this.getShell();
+            shell.setMinimized(false);
             }
          });
       }
@@ -399,8 +426,10 @@ public abstract class Crawler {
    // each time a page is being loaded, this listener will
    // count down the latch when the page has been loaded
       browser.addProgressListener(new ProgressListener() {
+         @Override
          public void changed(ProgressEvent event) { /* nothing */ }
 
+         @Override
          public void completed(ProgressEvent event) {
             Crawler.this.countDownLatch();
             info(getLocalizedString(PAGE_LOADED));
@@ -428,6 +457,7 @@ public abstract class Crawler {
       this.setDisplay(display);
 
       this.runOnSWTThread(new Runnable() {
+         @Override
          public void run() {
             Browser browser = Crawler.this.createNewBrowser();
             Crawler.this.setBrowser(browser);

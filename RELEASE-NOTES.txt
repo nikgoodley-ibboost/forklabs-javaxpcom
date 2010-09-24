@@ -1,6 +1,6 @@
 
 
-                      ForkLabs JavaXPCOM, Build 20100904
+                      ForkLabs JavaXPCOM, Build 2010XXXX
                                 Release Notes
 
 
@@ -32,6 +32,12 @@ LIMITATIONS
     Also, as with any SWT application, you will have to access the content of
     the underlying DOM inside the SWT thread, usually using the instance
     method Crawler#runOnSWTThread().
+
+
+NEW FEATURES IN VERSION 2010XXXX
+
+   o Added two methods to control the enclosing shell, minimizeBrowser and
+     restoreBrowser
 
 
 NEW FEATURES IN VERSION 20100913

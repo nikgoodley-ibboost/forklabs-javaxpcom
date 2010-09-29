@@ -30,6 +30,9 @@ import org.mozilla.interfaces.nsIDOMHTMLTableCellElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableRowElement;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsIDOMText;
+
 import org.mozilla.xpcom.XPCOMException;
 
 
@@ -50,6 +53,34 @@ public class XPCOMConverter {
 //---------------------------
 // Conversion class methods
 //---------------------------
+
+   /**
+    * Extract the plain text of this node and all its children. Not to be
+    * confused with {@link #asTextNode(nsIDOMNode)}.
+    * @param   node   the node from which to extract the text.
+    * @return   the inner plain text.
+    * @see   #asTextNode(nsIDOMNode)
+    */
+   public static String asPlainText(nsIDOMNode node) {
+      StringBuilder sb = new StringBuilder();
+
+      int type = node.getNodeType();
+      if (nsIDOMNode.TEXT_NODE == type) {
+         String text = node.getNodeValue();
+         sb.append(text);
+         }
+
+      nsIDOMNodeList children = node.getChildNodes();
+      for (long i = 0, len = children.getLength(); i < len; i++) {
+         nsIDOMNode child = children.item(i);
+         String text = asPlainText(child);
+         sb.append(text);
+         }
+
+      String text = sb.toString();
+      return text;
+      }
+
 
    /**
     * Query the {@code nsIDOMHTMLElement} interface from the node.
@@ -142,6 +173,18 @@ public class XPCOMConverter {
    public static nsIDOMHTMLTableRowElement asTableRow(nsIDOMNode node) {
       nsIDOMHTMLTableRowElement row = (nsIDOMHTMLTableRowElement) node.queryInterface(nsIDOMHTMLTableRowElement.NS_IDOMHTMLTABLEROWELEMENT_IID);
       return row;
+      }
+
+   /**
+    * Query the {@code nsIDOMText} interface from the node. Extracting the plain
+    * inner text of a node should be done with {@link #asPlainText(nsIDOMNode)}.
+    * @param   node   the node to convert.
+    * @exception   XPCOMException   if the node is not a text node.
+    * @see   #asPlainText(nsIDOMNode)
+    */
+   public static nsIDOMText asTextNode(nsIDOMNode node) {
+      nsIDOMText text = (nsIDOMText) node.queryInterface(nsIDOMText.NS_IDOMTEXT_IID);
+      return text;
       }
 
    }

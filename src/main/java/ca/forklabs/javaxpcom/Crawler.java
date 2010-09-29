@@ -41,6 +41,8 @@ import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIWebBrowser;
+
+import ca.forklabs.javaxpcom.util.XPCOMConverter;
 import es.ladyr.ladyrbrowser.impl.DisplayManager;
 
 import java.io.IOException;
@@ -368,24 +370,11 @@ public abstract class Crawler {
     * Gets the text of the node.
     * @param   node   the node.
     * @return   the text.
+    * @deprecated   use {@link XPCOMConverter#asPlainText(nsIDOMNode)}.
     */
+   @Deprecated
    protected String getTextFrom(nsIDOMNode node) {
-      StringBuilder sb = new StringBuilder();
-
-      int type = node.getNodeType();
-      if (nsIDOMNode.TEXT_NODE == type) {
-         String text = node.getNodeValue();
-         sb.append(text);
-         }
-
-      nsIDOMNodeList children = node.getChildNodes();
-      for (long i = 0, len = children.getLength(); i < len; i++) {
-         nsIDOMNode child = children.item(i);
-         String text = this.getTextFrom(child);
-         sb.append(text);
-         }
-
-      String text = sb.toString();
+      String text = XPCOMConverter.asPlainText(node);
       return text;
       }
 

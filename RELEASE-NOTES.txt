@@ -38,6 +38,8 @@ NEW FEATURES IN VERSION 2010XXXX
 
    o Added two methods to control the enclosing shell, minimizeBrowser and
      restoreBrowser
+   o Added a method to extract the "inner text" from a node in the
+     XPCOMConverter, deprecated the same method in class Crawler
 
 
 NEW FEATURES IN VERSION 20100913

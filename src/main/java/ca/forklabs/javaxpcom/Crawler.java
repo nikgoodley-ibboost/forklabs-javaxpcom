@@ -503,7 +503,7 @@ public abstract class Crawler {
 //---------------------------
 
    /** The name of the logger of this crawler. */
-   protected static final String LOGGER_NAME = "forklabs-crawler";              //$NON-NLS-1$
+   protected static final String LOGGER_NAME = "forklabs-crawler"; //$NON-NLS-1$
 
    /** The logger object. */
    protected static final Logger LOGGER = Logger.getLogger(LOGGER_NAME);

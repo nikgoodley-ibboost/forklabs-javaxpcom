@@ -38,7 +38,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIWebBrowser;
 
@@ -146,8 +145,11 @@ public abstract class Crawler {
     */
    @SuppressWarnings("hiding")
    protected Shell getShell() {
+      Shell shell = null;
       Browser browser = this.getBrowser();
-      Shell shell = browser.getShell();
+      if (null != browser) {
+         shell = browser.getShell();
+         }
       return shell;
       }
 
@@ -458,22 +460,20 @@ public abstract class Crawler {
     * Tears down this search engine.
     */
    public void teardown() {
-// BUG : fix the teardown
-//      this.runOnSWTThread(new Runnable() {
-//         @Override
-//         public void run() {
-//            Browser browser = Crawler.this.getBrowser();
-//            if (null != browser) {
-//               Shell shell = browser.getShell();
-//               shell.dispose();
-//               }
-
+      this.runOnSWTThread(new Runnable() {
+         @Override
+         public void run() {
+            Shell shell = Crawler.this.getShell();
+            if (null != shell) {
+               shell.dispose();
+               }
+// BUG : fix the teardown - who owns the display and all?
 //            Display display = Crawler.this.getDisplay();
 //            if (null != display) {
 //               display.close();
 //               }
-//            }
-//         });
+            }
+         });
       }
 
 

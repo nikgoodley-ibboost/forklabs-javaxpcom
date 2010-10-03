@@ -40,6 +40,8 @@ NEW FEATURES IN VERSION 2010XXXX
      restoreBrowser
    o Added a method to extract the "inner text" from a node in the
      XPCOMConverter, deprecated the same method in class Crawler
+   o Partially completed Crawler::teardown() by having it close the enclosing
+     shell, nothing is done yet about the display
 
 
 NEW FEATURES IN VERSION 20100913

@@ -1,6 +1,6 @@
 
 
-                      ForkLabs JavaXPCOM, Build 2010XXXX
+                      ForkLabs JavaXPCOM, Build 20101007
                                 Release Notes
 
 
@@ -34,7 +34,7 @@ LIMITATIONS
     method Crawler#runOnSWTThread().
 
 
-NEW FEATURES IN VERSION 2010XXXX
+NEW FEATURES IN VERSION 20101007
 
    o Added two methods to control the enclosing shell, minimizeBrowser and
      restoreBrowser
@@ -48,7 +48,7 @@ NEW FEATURES IN VERSION 2010XXXX
      configuration of the underlying browser (issue #3).
 
 
-NEW FEATURES IN VERSION 20100913
+VERSION 20100913
 
    o Permission has been given to use class DisplayManager
    o Fixed a bug in the logging of Crawler::navigateTo()

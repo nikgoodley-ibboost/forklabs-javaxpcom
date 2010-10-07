@@ -35,7 +35,13 @@ import org.mozilla.interfaces.nsIDOMText;
 
 import org.mozilla.xpcom.XPCOMException;
 
-
+/**
+ * Class {@code XPCOMConverter} is a rudimentary set of methods to convert from
+ * {@link nsIDOMNode}s to specialized nodes.
+ *
+ * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.util.XPCOMConverter">Daniel Léonard</a>
+ * @version $Revision$
+ */
 public class XPCOMConverter {
 
 //---------------------------

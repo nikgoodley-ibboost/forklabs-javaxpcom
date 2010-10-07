@@ -510,33 +510,45 @@ public abstract class Crawler {
 
    /**
     * Logs a string message at the config level.
-    * @param   message   the message.
+    * @param   pattern   the message pattern.
+    * @param   arguments   the message arguments.
+    * @see   MessageFormat#format(String, Object...)
     */
-   protected static void config(String message) {
+   protected static void config(String pattern, Object... arguments) {
+      String message = MessageFormat.format(pattern, arguments);
       LOGGER.config(message);
       }
 
    /**
     * Logs a string message at the fine level.
-    * @param   message   the message.
+    * @param   pattern   the message pattern.
+    * @param   arguments   the message arguments.
+    * @see   MessageFormat#format(String, Object...)
     */
-   protected static void fine(String message) {
+   protected static void fine(String pattern, Object... arguments) {
+      String message = MessageFormat.format(pattern, arguments);
       LOGGER.fine(message);
       }
 
    /**
     * Logs a string message at the info level.
-    * @param   message   the message.
+    * @param   pattern   the message pattern.
+    * @param   arguments   the message arguments.
+    * @see   MessageFormat#format(String, Object...)
     */
-   protected static void info(String message) {
+   protected static void info(String pattern, Object... arguments) {
+      String message = MessageFormat.format(pattern, arguments);
       LOGGER.info(message);
       }
 
    /**
     * Logs a string message at the severe level.
-    * @param   message   the message.
+    * @param   pattern   the message pattern.
+    * @param   arguments   the message arguments.
+    * @see   MessageFormat#format(String, Object...)
     */
-   protected static void severe(String message) {
+   protected static void severe(String pattern, Object... arguments) {
+      String message = MessageFormat.format(pattern, arguments);
       LOGGER.severe(message);
       }
 

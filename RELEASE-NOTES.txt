@@ -42,6 +42,10 @@ NEW FEATURES IN VERSION 2010XXXX
      XPCOMConverter, deprecated the same method in class Crawler
    o Partially completed Crawler::teardown() by having it close the enclosing
      shell, nothing is done yet about the display
+   o Crawler::configureNewShell() is no longer abstract, it is now an empty
+     method (issue #5).
+   o Added Crawler::configureNewBrowser(), an empty method to help with the
+     configuration of the underlying browser (issue #3).
 
 
 NEW FEATURES IN VERSION 20100913

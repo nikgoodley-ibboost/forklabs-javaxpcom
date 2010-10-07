@@ -386,10 +386,26 @@ public abstract class Crawler {
 //---------------------------
 
    /**
-    * Configures the newly created shell.
+    * Configures the newly created shell. This implementation does nothing.
     * @param   shell   the new shell.
     */
-   protected abstract void configureNewShell(Shell shell);
+   protected void configureNewShell(Shell shell) {
+   // nothing
+      }
+
+   /**
+    * Configures the newly created browser. This implementation does nothing.
+    *
+    * When this method is called for the first time, the only configuration that
+    * has been done to the browser is to give it the same bounds as the client
+    * area of the enclosing shell.
+    *
+    * @param   browser   the new browser.
+    */
+   @SuppressWarnings("hiding")
+   protected void configureNewBrowser(Browser browser) {
+   // nothing
+      }
 
    /**
     * Creates a new {@link Shell} to contain a {@link Browser}.
@@ -414,6 +430,9 @@ public abstract class Crawler {
 
       Browser browser = new Browser(shell, SWT.MOZILLA);
       browser.setBounds(shell.getClientArea());
+
+      this.configureNewBrowser(browser);
+
    // each time a page is being loaded, this listener will
    // count down the latch when the page has been loaded
       browser.addProgressListener(new ProgressListener() {

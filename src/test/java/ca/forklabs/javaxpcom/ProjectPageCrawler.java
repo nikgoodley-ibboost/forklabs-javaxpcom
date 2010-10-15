@@ -30,7 +30,7 @@ public class ProjectPageCrawler extends Crawler {
 
 
 //---------------------------
-// Overriden methods from ca.forklabs.javaxpcom.Crawler
+// Overridden methods from ca.forklabs.javaxpcom.Crawler
 //---------------------------
 
    @Override

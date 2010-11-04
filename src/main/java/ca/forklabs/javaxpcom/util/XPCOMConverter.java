@@ -1,7 +1,7 @@
 /*
  * @(#) $Header$
  *
- * Copyright (C) 2010  Daniel Léonard
+ * Copyright (C) 2010  Forklabs Daniel LÃ©onard
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ import org.mozilla.xpcom.XPCOMException;
  * Class {@code XPCOMConverter} is a rudimentary set of methods to convert from
  * {@link nsIDOMNode}s to specialized nodes.
  *
- * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.util.XPCOMConverter">Daniel Léonard</a>
+ * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.util.XPCOMConverter">Daniel LÃ©onard</a>
  * @version $Revision$
  */
 public class XPCOMConverter {

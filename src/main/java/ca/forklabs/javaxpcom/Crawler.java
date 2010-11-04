@@ -1,7 +1,7 @@
 /*
  * @(#) $Header$
  *
- * Copyright (C) 2010  Daniel Léonard
+ * Copyright (C) 2010  Forklabs Daniel LÃ©onard
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,7 +54,7 @@ import java.io.IOException;
  * {@link Shell} that can be interacted with to navigate the web and access the
  * underlying {@link nsIDOMDocument}.
  *
- * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.Crawler">Daniel Léonard</a>
+ * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.Crawler">Daniel LÃ©onard</a>
  * @version $Revision$
  */
 public abstract class Crawler {

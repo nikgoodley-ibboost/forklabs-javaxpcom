@@ -1,7 +1,7 @@
 /*
  * @(#) $Header$
  *
- * Copyright (C) 2010  Daniel Léonard
+ * Copyright (C) 2010  Forklabs Daniel LÃ©onard
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@ import org.mozilla.interfaces.nsIDOMNodeList;
  * non-recursive inspection and its two-parameter sibling to control the
  * recursion into child nodes.
  *
- * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.util.XPCOMInspector">Daniel Léonard</a>
+ * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.util.XPCOMInspector">Daniel LÃ©onard</a>
  * @version $Revision$
  */
 @SuppressWarnings({ "unchecked", "nls" })

@@ -1,6 +1,6 @@
 
 
-                      ForkLabs JavaXPCOM, Build 20101007
+                      ForkLabs JavaXPCOM, Build 2011xxxx
                                 Release Notes
 
 
@@ -34,7 +34,12 @@ LIMITATIONS
     method Crawler#runOnSWTThread().
 
 
-NEW FEATURES IN VERSION 20101007
+NEW FEATURES IN VERSION 2011xxxx
+
+   o Corrected the demo to match the changes on Google Code
+   
+
+VERSION 20101007
 
    o Added two methods to control the enclosing shell, minimizeBrowser and
      restoreBrowser

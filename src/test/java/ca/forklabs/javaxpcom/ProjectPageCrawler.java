@@ -3,16 +3,13 @@ package ca.forklabs.javaxpcom;
 import java.io.Console;
 import ca.forklabs.javaxpcom.Crawler;
 import org.eclipse.swt.widgets.Shell;
-import org.mozilla.interfaces.nsIDOMHTMLCollection;
-import org.mozilla.interfaces.nsIDOMHTMLTableCellElement;
-import org.mozilla.interfaces.nsIDOMHTMLTableElement;
-import org.mozilla.interfaces.nsIDOMHTMLTableRowElement;
+import org.mozilla.interfaces.nsIDOMHTMLAnchorElement;
+import org.mozilla.interfaces.nsIDOMHTMLDivElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 
-import static ca.forklabs.javaxpcom.util.XPCOMConverter.asTable;
-import static ca.forklabs.javaxpcom.util.XPCOMConverter.asTableCell;
-import static ca.forklabs.javaxpcom.util.XPCOMConverter.asTableRow;
+import static ca.forklabs.javaxpcom.util.XPCOMConverter.asDiv;
+import static ca.forklabs.javaxpcom.util.XPCOMConverter.asAnchor;
 import static ca.forklabs.javaxpcom.util.XPCOMInspector.inspect;
 
 import java.io.IOException;
@@ -44,41 +41,32 @@ public class ProjectPageCrawler extends Crawler {
 // Instance methods
 //---------------------------
 
-//  <th onclick="if (!cancelBubble) _go('/p/forklabs-javaxpcom/');">
-//    <div class="tab active">
-//      <div class="round4"></div>
-//      <div class="round2"></div>
-//      <div class="round1"></div>
-//      <div class="box-inner">
-//        <a href="/p/forklabs-javaxpcom/" onclick="cancelBubble=true;">Project&nbsp;Home</a>
-//      </div>
-//    </div>
-//  </th>
-   protected String exploreTableCell(nsIDOMHTMLTableCellElement cell) {
-      nsIDOMNode anchor = cell.getElementsByTagName("a").item(0L);
+// <div id="mt" class="gtb">
+//   <a href="/p/forklabs-baselib/" class="tab active">Project&nbsp;Home</a>
+//   <a href="/p/forklabs-baselib/downloads/list" class="tab ">Downloads</a>
+//   <a href="/p/forklabs-baselib/w/list" class="tab ">Wiki</a>
+//   <a href="/p/forklabs-baselib/issues/list" class="tab ">Issues</a>
+//   <a href="/p/forklabs-baselib/source/checkout" class="tab ">Source</a>
+//   <a href="/p/forklabs-baselib/admin" class="tab inactive">Administer</a>
+//   <div class="gtbc"></div>
+// </div>
+   protected String exploreTableCell(nsIDOMHTMLAnchorElement anchor) {
       String value = this.getTextFrom(anchor);
       return value;
       }
 
    protected void exploreMainMenu() {
       nsIDOMNode node = this.getElementById("mt");
-      nsIDOMHTMLTableElement table = asTable(node);
+      nsIDOMHTMLDivElement div = asDiv(node);
 
-      System.out.println("=== Inspecting the table node ===");
-      inspect(table);
-
-   // at the time of writing there was only one row
-      nsIDOMHTMLCollection rows = table.getRows();
-      nsIDOMHTMLTableRowElement row = asTableRow(rows.item(0L));
-
-      System.out.println("=== Inspecting the table row node ===");
-      inspect(row);
+      System.out.println("=== Inspecting the div node ===");
+      inspect(div);
 
       System.out.println("=== Listing the menu ===");
-      nsIDOMNodeList cells = row.getElementsByTagName("th");
-      for (long i = 0, len = cells.getLength(); i < len; i++) {
-         nsIDOMHTMLTableCellElement cell = asTableCell(cells.item(i));
-         String text = this.exploreTableCell(cell);
+      nsIDOMNodeList anchors = div.getElementsByTagName("a");
+      for (long i = 0, len = anchors.getLength(); i < len; i++) {
+         nsIDOMHTMLAnchorElement anchor = asAnchor(anchors.item(i));
+         String text = this.exploreTableCell(anchor);
          System.out.println("Menu #" + (i+1) + " is " + text);
          }
       }

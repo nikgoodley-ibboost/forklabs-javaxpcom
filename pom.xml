@@ -10,6 +10,7 @@
  
   <properties>
     <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <distrib.dir>${project.basedir}/distrib</distrib.dir>
     <reports.dir>${project.build.directory}/reports</reports.dir>
     <tools.dir>${project.basedir}/tools</tools.dir>
@@ -17,8 +18,11 @@
   </properties>
 
   <issueManagement>
-    <url>http://code.google.com/p/forklabs-javaxpcom/issues/list</url>
+    <system>code.google.com</system>
+    <url>http://code.google.com/p/forklabs-javaxpcom/issues</url>
   </issueManagement>
+
+  <inceptionYear>2010</inceptionYear>
 
   <scm>
     <url>https://forklabs-javaxpcom.googlecode.com/hg/</url>

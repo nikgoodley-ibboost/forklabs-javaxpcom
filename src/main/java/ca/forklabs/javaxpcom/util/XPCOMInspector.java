@@ -36,7 +36,7 @@ import org.mozilla.interfaces.nsIDOMNodeList;
  * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.util.XPCOMInspector">Daniel Léonard</a>
  * @version $Revision$
  */
-@SuppressWarnings({ "unchecked", "nls" })
+@SuppressWarnings("nls")
 public class XPCOMInspector {
 
 //---------------------------
@@ -60,6 +60,7 @@ public class XPCOMInspector {
     * interfaces it implements.
     * @param   node   the node to inspect.
     */
+   @SuppressWarnings("rawtypes")
    public static void inspectNodeDeclaration(nsIDOMNode node) {
       Class clazz = node.getClass();
       Class[] classes = clazz.getInterfaces();

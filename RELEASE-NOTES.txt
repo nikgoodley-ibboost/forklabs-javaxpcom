@@ -1,6 +1,6 @@
 
 
-                      ForkLabs JavaXPCOM, Build 2011xxxx
+                      ForkLabs JavaXPCOM, Build 20110523
                                 Release Notes
 
 
@@ -34,9 +34,10 @@ LIMITATIONS
     method Crawler#runOnSWTThread().
 
 
-NEW FEATURES IN VERSION 2011xxxx
+NEW FEATURES IN VERSION 20110523
 
    o Corrected the demo to match the changes on Google Code
+   o Added the Ladyr's XULRunner with Java: JavaXPCOM Tutorial
    
 
 VERSION 20101007

@@ -28,12 +28,7 @@
     </fileSet>
 
     <fileSet>
-      <directory>${project.basedir}/docs</directory>
-      <outputDirectory>/docs</outputDirectory>
-    </fileSet>
-
-    <fileSet>
-      <directory>${reports.dir}</directory>
+      <directory>${project.basedir}/target/site</directory>
       <outputDirectory>/docs</outputDirectory>
       <includes>
         <include>apidocs/**</include>
@@ -49,7 +44,7 @@
       <directory>${project.build.directory}</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>forklabs-javaxpcom-*.jar</include>
+        <include>forklabs-javaxpcom-${version}.jar</include>
       </includes>
     </fileSet>
 

@@ -2,6 +2,7 @@ package ca.forklabs.javaxpcom;
 
 import java.io.Console;
 import ca.forklabs.javaxpcom.Crawler;
+import ca.forklabs.javaxpcom.util.XPCOMConverter;
 import org.eclipse.swt.widgets.Shell;
 import org.mozilla.interfaces.nsIDOMHTMLAnchorElement;
 import org.mozilla.interfaces.nsIDOMHTMLDivElement;
@@ -51,7 +52,7 @@ public class ProjectPageCrawler extends Crawler {
 //   <div class="gtbc"></div>
 // </div>
    protected String exploreTableCell(nsIDOMHTMLAnchorElement anchor) {
-      String value = this.getTextFrom(anchor);
+      String value = XPCOMConverter.asPlainText(anchor);
       return value;
       }
 

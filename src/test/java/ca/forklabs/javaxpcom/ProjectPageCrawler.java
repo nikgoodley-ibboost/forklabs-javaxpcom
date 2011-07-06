@@ -76,12 +76,7 @@ public class ProjectPageCrawler extends Crawler {
       String url = "http://code.google.com/p/forklabs-javaxpcom/";
       this.navigateTo(url);
 
-      this.runOnSWTThread(new Runnable() {
-         @Override
-         public void run() {
-            ProjectPageCrawler.this.exploreMainMenu();
-            }
-         });
+      this.exploreMainMenu();
 
       Thread.sleep(3000L);
 

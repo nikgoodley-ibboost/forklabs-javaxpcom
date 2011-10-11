@@ -41,6 +41,7 @@ import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIWebBrowser;
 
+import ca.forklabs.javaxpcom.select.Selector;
 import ca.forklabs.javaxpcom.util.XPCOMConverter;
 import es.ladyr.ladyrbrowser.impl.DisplayManager;
 
@@ -264,7 +265,7 @@ public abstract class Crawler {
     * @throws   IOException   if the page fails to load.
     */
    @SuppressWarnings("hiding")
-   protected void navigateTo(String url) throws IOException {
+   public void navigateTo(String url) throws IOException {
       this.newCountDownLatch();
 
       final String destination = url;
@@ -290,7 +291,7 @@ public abstract class Crawler {
     * @return   the DOM document.
     */
    @SuppressWarnings("hiding")
-   protected nsIDOMDocument getDocument() {
+   public nsIDOMDocument getDocument() {
       final nsIDOMDocument[] outs = new nsIDOMDocument[1];
 
       this.runOnSWTThread(new Runnable() {
@@ -314,10 +315,29 @@ public abstract class Crawler {
     * @return   the element or {@code null} if the id does not map to an
     *           element.
     */
-   protected nsIDOMElement getElementById(String id) {
+   public nsIDOMElement getElementById(String id) {
       nsIDOMDocument document = this.getDocument();
       nsIDOMElement element = document.getElementById(id);
       return element;
+      }
+
+   /**
+    * Creates a selector on the document and its children.
+    * @return   the selector.
+    */
+   public Selector selector() {
+      nsIDOMNode document = this.getDocument();
+      Selector selector = this.selector(document);
+      return selector;
+      }
+
+   /**
+    * Creates a selector on the specified node and its children.
+    * @return   the selector.
+    */
+   public Selector selector(nsIDOMNode root) {
+      Selector selector = new Selector(root);
+      return selector;
       }
 
 

@@ -92,6 +92,13 @@
   <dependencies>
 
     <dependency>
+      <groupId>ca.forklabs.baselib</groupId>
+      <artifactId>forklabs-baselib</artifactId>
+      <version>20110523</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.eclipse.swt</groupId>
       <artifactId>SWT</artifactId>
       <version>3.650</version>
@@ -113,6 +120,22 @@
       <version>1.9.0.13</version>
       <scope>system</scope>
       <systemPath>${tools.dir}/xulrunner-1.9.0.13-sdk/lib/MozillaInterfaces.jar</systemPath>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>org.jmock</groupId>
+    	<artifactId>jmock</artifactId>
+    	<version>2.5.1</version>
+    	<type>jar</type>
+    	<scope>test</scope>
     </dependency>
 
   </dependencies>

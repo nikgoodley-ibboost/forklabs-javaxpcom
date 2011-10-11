@@ -1,6 +1,6 @@
 
 
-                      ForkLabs JavaXPCOM, Build 20110523
+                      ForkLabs JavaXPCOM, Build 20111011
                                 Release Notes
 
 
@@ -29,12 +29,16 @@ LIMITATIONS
     * http://www.eclipse.org/swt/
     * http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/
 
-    Also, as with any SWT application, you will have to access the content of
-    the underlying DOM inside the SWT thread, usually using the instance
-    method Crawler#runOnSWTThread().
+
+NEW FEATURES IN VERSION 20111011
+
+   o A new selector API has been added to select nodes in a document
+     much more easily.
+   o A new dependency has been added, forklabs-baselib
+     (http://code.google.com/p/forklabs-baselib/)
 
 
-NEW FEATURES IN VERSION 20110523
+VERSION 20110523
 
    o Corrected the demo to match the changes on Google Code
    o Added the Ladyr's XULRunner with Java: JavaXPCOM Tutorial

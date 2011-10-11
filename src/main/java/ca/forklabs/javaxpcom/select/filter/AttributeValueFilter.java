@@ -68,7 +68,7 @@ public class AttributeValueFilter implements Selector.Filter {
    /**
     * Constructor.
     * @param   name   the name of the attribute.
-    * @param   pattern   the pattern of the value of the attribute.
+    * @param   regex   the regular expression of the value of the attribute.
     */
    public AttributeValueFilter(String name, String regex) {
       this.setName(name);

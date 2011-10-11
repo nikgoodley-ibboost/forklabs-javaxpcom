@@ -197,12 +197,12 @@ public class Selector {
    /**
     * Adds an {@link AttributeValueFilter} of the given name and given value.
     * @param   name   the name of the attribute.
-    * @param   pattern   the pattern of the value of the attribute.
+    * @param   regex   the regular expression of the value of the attribute.
     * @return   this selector.
     */
-   public Selector attribute(String name, String pattern) {
+   public Selector attribute(String name, String regex) {
 // TODO : add methods for attribute selection: http://api.jquery.com/category/selectors/
-      Filter filter = new AttributeValueFilter(name, pattern);
+      Filter filter = new AttributeValueFilter(name, regex);
       this.addFilter(filter);
       return this;
       }

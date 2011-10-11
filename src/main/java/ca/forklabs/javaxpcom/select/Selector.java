@@ -29,7 +29,6 @@ import ca.forklabs.baselib.util.Iterators;
 import ca.forklabs.baselib.util.Predicates;
 import ca.forklabs.baselib.util.UnaryPredicate;
 import ca.forklabs.javaxpcom.Crawler;
-import ca.forklabs.javaxpcom.ProjectPageCrawler;
 import ca.forklabs.javaxpcom.select.filter.AttributeValueFilter;
 import ca.forklabs.javaxpcom.select.filter.ElementFilter;
 
@@ -45,12 +44,12 @@ import ca.forklabs.javaxpcom.select.filter.ElementFilter;
  * calling {@link #list()}. Once the list has been gotten, the selector instance
  * should be discarded.
  * <p>
- * From {@link ProjectPageCrawler#exploreMainMenu()}:
+ * From {@link ca.forklabs.javaxpcom.ProjectPageCrawler#exploreMainMenu()}:
  * <pre>
  *    List<nsIDOMNode> anchors = this.selector()
- *                                   .element("a")
- *                                   .attribute("class", "tab")
- *                                   .list();
+ *                       .element("a")
+ *                       .attribute("class", "tab")
+ *                       .list();
  * </pre>
  * gives the list of the five menu items at the
  * <a href="http://code.google.com/p/forklabs-javaxpcom/">top of this project page</a>

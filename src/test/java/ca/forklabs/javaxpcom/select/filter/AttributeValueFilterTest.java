@@ -86,7 +86,7 @@ public class AttributeValueFilterTest {
 
       final String[] values = new String[] {
          "anchor",
-         "title",
+         "active title",
          null,
          null,
          };

@@ -36,13 +36,13 @@ import ca.forklabs.javaxpcom.select.Selector;
  * <p>
  * Filter {@code new AttributeValueFilter("class", "title");} will match:
  * <pre>
- * <h1 class="title active"></h1>
+ * &lt;h1 class="title active"&gt;&lt;/h1&gt;
  * </pre>
  * and will not match:
  * <pre>
- * <a class="anchor"></a> // wrong attribute value
- * <li id="123">          // wrong attribute
- * <p></p>                // wrong attribute - no attribute
+ * &lt;a class="anchor"&gt;&lt;/a&gt; // wrong attribute value
+ * &lt;li id="123"&gt;&lt;/li&gt;     // wrong attribute
+ * &lt;p&gt;&lt;/p&gt;                // wrong attribute - no attribute
  * </pre>
  *
  * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.select.filter.AttributeValueFilter">Daniel Léonard</a>

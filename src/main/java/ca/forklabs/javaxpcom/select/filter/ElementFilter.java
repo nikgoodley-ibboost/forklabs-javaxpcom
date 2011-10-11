@@ -29,11 +29,11 @@ import ca.forklabs.javaxpcom.select.Selector;
  * <p>
  * Filter {@code new ElementFilter("h1");} will match:
  * <pre>
- * <h1 class="title active"></h1>
+ * &lt;h1 class="title active"&gt;&lt;/h1&gt;
  * </pre>
  * and will not match:
  * <pre>
- * <a class="anchor"></a> // wrong name
+ * &lt;a class="anchor"&gt;&lt;/a&gt; // wrong name
  * </pre>
  *
  * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.select.filter.ElementFilter">Daniel Léonard</a>

@@ -20,7 +20,7 @@
 
 package ca.forklabs.javaxpcom.select;
 
-import ca.forklabs.javaxpcom.select.Selector.Filter;
+import ca.forklabs.javaxpcom.select.Selector;
 import ca.forklabs.javaxpcom.select.filter.AndFilter;
 import ca.forklabs.javaxpcom.select.filter.AttributeValueFilter;
 import ca.forklabs.javaxpcom.select.filter.ElementFilter;
@@ -58,8 +58,8 @@ public class Filters {
     * @param   regex   the regular expression of the value of the attribute.
     * @return   this selector.
     */
-   public static Filter attribute(String name, String regex) {
-      Filter filter = new AttributeValueFilter(name, regex);
+   public static Selector.Filter attribute(String name, String regex) {
+      Selector.Filter filter = new AttributeValueFilter(name, regex);
       return filter;
       }
 
@@ -68,8 +68,8 @@ public class Filters {
     * @param   name   the name of the element.
     * @return   this selector.
     */
-   public static Filter element(String name) {
-      Filter filter = new ElementFilter(name);
+   public static Selector.Filter element(String name) {
+      Selector.Filter filter = new ElementFilter(name);
       return filter;
       }
 
@@ -80,8 +80,8 @@ public class Filters {
     * @return   {@code true} if and only if all the filters return {@code true},
     *           {@code false} otherwise.
     */
-   public static Filter and(Filter... filters) {
-      Filter and = new AndFilter(filters);
+   public static Selector.Filter and(Selector.Filter... filters) {
+      Selector.Filter and = new AndFilter(filters);
       return and;
       }
 
@@ -92,8 +92,8 @@ public class Filters {
     * @return   {@code true} if at least one the filters return {@code true},
     *           {@code false} otherwise.
     */
-   public static Filter or(Filter... filters) {
-      Filter or = new OrFilter(filters);
+   public static Selector.Filter or(Selector.Filter... filters) {
+      Selector.Filter or = new OrFilter(filters);
       return or;
       }
 
@@ -104,10 +104,52 @@ public class Filters {
     * @return   {@code true} if the filter returns {@code false},
     *           {@code false} if the filter returns {@code true}.
     */
-   public static Filter not(Filter filter) {
-      Filter not = new NotFilter(filter);
+   public static Selector.Filter not(Selector.Filter filter) {
+      Selector.Filter not = new NotFilter(filter);
       return not;
       }
+
+
+//---------------------------
+// Basic filters
+//---------------------------
+
+   /**
+    * Selects all nodes of the given CSS class.
+    * @param   clazz   the css class.
+    * @return   the filter.
+    */
+   public static Selector.Filter css(String clazz) {
+      Selector.Filter filter = attribute("class", clazz); //$NON-NLS-1$
+      return filter;
+      }
+
+   /**
+    * Selects all the header nodes (e.g. {@code &lt;h1&gt;} though
+    * {@code &lt;h6&gt;}).
+    * @return   the filter.
+    */
+   public static Selector.Filter headers() {
+      Selector.Filter filter = or(element("h1"), //$NON-NLS-1$
+                                  element("h2"), //$NON-NLS-1$
+                                  element("h3"), //$NON-NLS-1$
+                                  element("h4"), //$NON-NLS-1$
+                                  element("h5"), //$NON-NLS-1$
+                                  element("h6") //$NON-NLS-1$
+                                 );
+      return filter;
+      }
+
+   /**
+    * Selects the element with the given id.
+    * @param   id   the id.
+    * @return   the filter.
+    */
+   public static Selector.Filter id(String id) {
+      Selector.Filter filter = attribute("id", id); //$NON-NLS-1$
+      return filter;
+      }
+
 
 //---------------------------
 // Form-related filters
@@ -118,10 +160,10 @@ public class Filters {
     * @param   type   the type of input.
     * @return   the filter.
     */
-   protected static Filter inputFilter(String type) {
-      Filter filter = and(element("input"), //$NON-NLS-1$
-                          attribute("type", type) //$NON-NLS-1$
-                          );
+   protected static Selector.Filter inputFilter(String type) {
+      Selector.Filter filter = and(element("input"), //$NON-NLS-1$
+                                   attribute("type", type) //$NON-NLS-1$
+                                  );
       return filter;
       }
 
@@ -130,10 +172,10 @@ public class Filters {
     * (e.g. {@code &lt;button&gt;} and {@code &lt;input type="button"&gt;}).
     * @return   this selector.
     */
-   public static Filter button() {
-      Filter filter = or(inputFilter("button"), //$NON-NLS-1$
-                         element("button") //$NON-NLS-1$
-                         );
+   public static Selector.Filter button() {
+      Selector.Filter filter = or(inputFilter("button"), //$NON-NLS-1$
+                                  element("button") //$NON-NLS-1$
+                                 );
       return filter;
       }
 
@@ -142,8 +184,8 @@ public class Filters {
     * (e.g. {@code &lt;input type="checkbox"&gt;}).
     * @return   this selector.
     */
-   public static Filter checkbox() {
-      Filter filter = inputFilter("checkbox"); //$NON-NLS-1$
+   public static Selector.Filter checkbox() {
+      Selector.Filter filter = inputFilter("checkbox"); //$NON-NLS-1$
       return filter;
       }
 
@@ -152,8 +194,8 @@ public class Filters {
     * (e.g. {@code &lt;input type="file"&gt;}).
     * @return   this selector.
     */
-   public static Filter file() {
-      Filter filter = inputFilter("file"); //$NON-NLS-1$
+   public static Selector.Filter file() {
+      Selector.Filter filter = inputFilter("file"); //$NON-NLS-1$
       return filter;
       }
 
@@ -162,8 +204,8 @@ public class Filters {
     * (e.g. {@code &lt;input type="hidden"&gt;}).
     * @return   this selector.
     */
-   public static Filter hidden() {
-      Filter filter = inputFilter("hidden"); //$NON-NLS-1$
+   public static Selector.Filter hidden() {
+      Selector.Filter filter = inputFilter("hidden"); //$NON-NLS-1$
       return filter;
       }
 
@@ -172,8 +214,8 @@ public class Filters {
     * (e.g. {@code &lt;input type="image"&gt;}).
     * @return   this selector.
     */
-   public static Filter image() {
-      Filter filter = inputFilter("image"); //$NON-NLS-1$
+   public static Selector.Filter image() {
+      Selector.Filter filter = inputFilter("image"); //$NON-NLS-1$
       return filter;
       }
 
@@ -183,12 +225,12 @@ public class Filters {
     * {@code &lt;textarea&gt;}).
     * @return   this selector.
     */
-   public static Filter input() {
-      Filter filter = or(element("button"), //$NON-NLS-1$
-                         element("input"), //$NON-NLS-1$
-                         element("select"), //$NON-NLS-1$
-                         element("textarea") //$NON-NLS-1$
-                         );
+   public static Selector.Filter input() {
+      Selector.Filter filter = or(element("button"), //$NON-NLS-1$
+                                  element("input"), //$NON-NLS-1$
+                                  element("select"), //$NON-NLS-1$
+                                  element("textarea") //$NON-NLS-1$
+                                 );
       return filter;
       }
 
@@ -197,8 +239,8 @@ public class Filters {
     * (e.g. {@code &lt;input type="password"&gt;}).
     * @return   this selector.
     */
-   public static Filter password() {
-      Filter filter = inputFilter("password"); //$NON-NLS-1$
+   public static Selector.Filter password() {
+      Selector.Filter filter = inputFilter("password"); //$NON-NLS-1$
       return filter;
       }
 
@@ -207,8 +249,8 @@ public class Filters {
     * (e.g. {@code &lt;input type="radio"&gt;}).
     * @return   this selector.
     */
-   public static Filter radio() {
-      Filter filter = inputFilter("radio"); //$NON-NLS-1$
+   public static Selector.Filter radio() {
+      Selector.Filter filter = inputFilter("radio"); //$NON-NLS-1$
       return filter;
       }
 
@@ -217,8 +259,8 @@ public class Filters {
     * (e.g. {@code &lt;input type="reset"&gt;}).
     * @return   this selector.
     */
-   public static Filter reset() {
-      Filter filter = inputFilter("reset"); //$NON-NLS-1$
+   public static Selector.Filter reset() {
+      Selector.Filter filter = inputFilter("reset"); //$NON-NLS-1$
       return filter;
       }
 
@@ -227,8 +269,8 @@ public class Filters {
     * (e.g. {@code &lt;select&gt;}).
     * @return   this selector.
     */
-   public static Filter select() {
-      Filter filter = element("select"); //$NON-NLS-1$
+   public static Selector.Filter select() {
+      Selector.Filter filter = element("select"); //$NON-NLS-1$
       return filter;
       }
 
@@ -237,8 +279,8 @@ public class Filters {
     * (e.g. {@code &lt;input type="submit"&gt;}).
     * @return   this selector.
     */
-   public static Filter submit() {
-      Filter filter = inputFilter("submit"); //$NON-NLS-1$
+   public static Selector.Filter submit() {
+      Selector.Filter filter = inputFilter("submit"); //$NON-NLS-1$
       return filter;
       }
 
@@ -247,12 +289,12 @@ public class Filters {
     * or all input element without type.
     * @return   this selector.
     */
-   public static Filter text() {
-      Filter filter = or(inputFilter("text"), //$NON-NLS-1$
-                         and(element("input"), //$NON-NLS-1$
-                             not(attribute("type", ".*")) //$NON-NLS-1$ //$NON-NLS-2$
-                            )
-                         );
+   public static Selector.Filter text() {
+      Selector.Filter filter = or(inputFilter("text"), //$NON-NLS-1$
+                                  and(element("input"), //$NON-NLS-1$
+                                      not(attribute("type", ".*")) //$NON-NLS-1$ //$NON-NLS-2$
+                                     )
+                                 );
 
       return filter;
       }
@@ -262,8 +304,8 @@ public class Filters {
     * (e.g. {@code &lt;textarea&gt;}).
     * @return   this selector.
     */
-   public static Filter textarea() {
-      Filter filter = element("textarea"); //$NON-NLS-1$
+   public static Selector.Filter textarea() {
+      Selector.Filter filter = element("textarea"); //$NON-NLS-1$
       return filter;
       }
 
@@ -311,10 +353,6 @@ public class Filters {
 //Hierarchy
 //Selects all direct child elements specified by "child" of elements specified by "parent".
 
-//Class Selector (“.class”)
-//Basic
-//Selects all elements with the given class.
-
 //:contains() Selector
 //Content Filter
 //Select all elements that contain the specified text.
@@ -326,10 +364,6 @@ public class Filters {
 //:disabled Selector
 //Form
 //Selects all elements that are disabled.
-
-//Element Selector (“element”)
-//Basic
-//Selects all elements with the given tag name.
 
 //:empty Selector
 //Content Filter
@@ -346,10 +380,6 @@ public class Filters {
 //:even Selector
 //Basic Filter, jQuery Extensions
 //Selects even elements, zero-indexed. See also odd.
-
-//:file Selector
-//Form, jQuery Extensions
-//Selects all elements of type file.
 
 //:first-child Selector
 //Child Filter
@@ -374,14 +404,6 @@ public class Filters {
 //:has() Selector
 //Content Filter, jQuery Extensions
 //Selects elements which contain at least one element that matches the specified selector.
-
-//:header Selector
-//Basic Filter, jQuery Extensions
-//Selects all elements that are headers, like h1, h2, h3 and so on.
-
-//ID Selector (“#id”)
-//Basic
-//Selects a single element with the given id attribute.
 
 //:last-child Selector
 //Child Filter

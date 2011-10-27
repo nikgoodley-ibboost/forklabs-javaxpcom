@@ -202,4 +202,45 @@ public class SelectorTest {
          }
       }
 
+   /**
+    * Tests that the basic selectors select the correct nodes.
+    * @throws   Exception   if anything goes wrong.
+    */
+   @Test
+   public void testBasicFilters() throws Exception {
+      String gre_home = "./tools/xulrunner-1.9.0.13-sdk/bin";
+      Crawler.setupXULRunner(gre_home);
+
+      Crawler crawler = null;
+      try {
+         crawler = new Crawler() { /* nothing */ };
+
+         URL url = SelectorTest.class.getResource("/basic.html");
+         crawler.navigateTo(url);
+
+         List<nsIDOMNode> css = crawler.selector().add(Filters.css("target")).list();
+         assertEquals(2, css.size());
+         assertEquals("H3", css.get(0).getNodeName());
+         assertEquals("H6", css.get(1).getNodeName());
+
+         List<nsIDOMNode> headers = crawler.selector().add(Filters.headers()).list();
+         assertEquals("H1", headers.get(0).getNodeName());
+         assertEquals("H2", headers.get(1).getNodeName());
+         assertEquals("H2", headers.get(2).getNodeName());
+         assertEquals("H3", headers.get(3).getNodeName());
+         assertEquals("H4", headers.get(4).getNodeName());
+         assertEquals("H5", headers.get(5).getNodeName());
+         assertEquals("H6", headers.get(6).getNodeName());
+
+         List<nsIDOMNode> ids = crawler.selector().add(Filters.id("h2")).list();
+         assertEquals(1, ids.size());
+         assertEquals("H2", ids.get(0).getNodeName());
+         }
+      finally {
+         if (null != crawler) {
+            crawler.teardown();
+            }
+         }
+      }
+
    }

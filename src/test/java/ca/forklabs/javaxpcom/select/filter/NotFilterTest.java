@@ -20,21 +20,20 @@
 
 package ca.forklabs.javaxpcom.select.filter;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
 import org.junit.Test;
 import org.mozilla.interfaces.nsIDOMNode;
+import ca.forklabs.javaxpcom.select.Selector;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Class {@code ElementFilterTest} tests class {@link ElementFilter}.
+ * Class {@code NotFilterTest} tests class {@link NotFilter}.
  *
- * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.select.filter.ElementFilterTest">Daniel Léonard</a>
+ * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.select.filter.NotFilterTest">Daniel Léonard</a>
  * @version $Revision$
  */
 @SuppressWarnings({ "boxing", "nls" })
-public class ElementFilterTest {
+public class NotFilterTest {
 
 //---------------------------
 // Constructors
@@ -43,7 +42,7 @@ public class ElementFilterTest {
    /**
     * Constructor.
     */
-   public ElementFilterTest() {
+   public NotFilterTest() {
    // nothing
       }
 
@@ -53,48 +52,29 @@ public class ElementFilterTest {
 //---------------------------
 
    /**
-    * Tests the evaluation function.
+    * Tests that the evaluation function works.
     */
    @Test
    public void testEval() {
-      Mockery context = new Mockery();
+      Selector.Filter yes = new Selector.Filter() { @Override public boolean eval(nsIDOMNode node) { return true; } };
+      Selector.Filter no = new Selector.Filter() { @Override public boolean eval(nsIDOMNode node) { return false; } };
 
-   // ElementFilter filter = new ElementFilter("h1");
-   // <a></a>  -> false
-   // <h1></h1>  -> true
-      final nsIDOMNode[] nodes = new nsIDOMNode[] {
-         context.mock(nsIDOMNode.class, "a"),
-         context.mock(nsIDOMNode.class, "h1"),
+      Selector.Filter[] candidates = new Selector.Filter[] {
+         new NotFilter(yes),
+         new NotFilter(no),
          };
-
-      final String[] names = new String[] {
-         "a",
-         "h1",
-         };
-
-      context.checking(new Expectations() { {
-         this.oneOf(nodes[0]).getNodeName();
-         this.will(returnValue(names[0]));
-
-         this.oneOf(nodes[1]).getNodeName();
-         this.will(returnValue(names[1]));
-         }});
 
       boolean[] solutions = new boolean[] {
          false, true,
          };
 
-      assertEquals(nodes.length, names.length);
-      assertEquals(nodes.length, solutions.length);
+      assertEquals(candidates.length, solutions.length);
 
-      ElementFilter filter = new ElementFilter("h1");
-
-      for (int i = 0, len = nodes.length; i < len; i++) {
-         boolean answer = filter.eval(nodes[i]);
-         assertEquals("node #" + (i+1), solutions[i], answer);
+      for (int i = 0, len = candidates.length; i < len; i++) {
+         Selector.Filter filter = candidates[i];
+         boolean answer = filter.eval(null);
+         assertEquals("filter #" + (i+1), solutions[i], answer);
          }
-
-      context.assertIsSatisfied();
       }
 
    }

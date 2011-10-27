@@ -54,6 +54,9 @@ public class AttributeValueFilterTest {
 // Test methods
 //---------------------------
 
+   /**
+    * Tests the evaluation function.
+    */
    @Test
    public void testEval() {
       Mockery context = new Mockery();
@@ -74,7 +77,7 @@ public class AttributeValueFilterTest {
          context.mock(nsIDOMNamedNodeMap.class, "nnm1"),
          context.mock(nsIDOMNamedNodeMap.class, "nnm2"),
          context.mock(nsIDOMNamedNodeMap.class, "nnm3"),
-         null,
+         context.mock(nsIDOMNamedNodeMap.class, "nnm4"),
          };
 
       final nsIDOMNode[] attributes = new nsIDOMNode[] {
@@ -93,9 +96,6 @@ public class AttributeValueFilterTest {
 
       context.checking(new Expectations() { {
       // <a class="anchor"></a>
-         this.oneOf(nodes[0]).hasAttributes();
-         this.will(returnValue(true));
-
          this.oneOf(nodes[0]).getAttributes();
          this.will(returnValue(nodemaps[0]));
 
@@ -107,9 +107,6 @@ public class AttributeValueFilterTest {
 
 
       // <h1 class="title"></a>
-         this.oneOf(nodes[1]).hasAttributes();
-         this.will(returnValue(true));
-
          this.oneOf(nodes[1]).getAttributes();
          this.will(returnValue(nodemaps[1]));
 
@@ -121,21 +118,19 @@ public class AttributeValueFilterTest {
 
 
       // <li id="123"></li>
-         this.oneOf(nodes[2]).hasAttributes();
-         this.will(returnValue(true));
-
          this.oneOf(nodes[2]).getAttributes();
          this.will(returnValue(nodemaps[2]));
 
          this.oneOf(nodemaps[2]).getNamedItem("class");
-         this.will(returnValue(null));
+         this.will(returnValue(attributes[2]));
 
 
          // <p></p>
-         this.oneOf(nodes[3]).hasAttributes();
-         this.will(returnValue(false));
+         this.oneOf(nodes[3]).getAttributes();
+         this.will(returnValue(nodemaps[3]));
 
-         this.never(nodes[3]).getAttributes();
+         this.oneOf(nodemaps[3]).getNamedItem("class");
+         this.will(returnValue(attributes[3]));
          }});
 
       boolean[] solutions = new boolean[] {

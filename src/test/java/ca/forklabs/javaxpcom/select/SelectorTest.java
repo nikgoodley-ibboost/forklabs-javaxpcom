@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.mozilla.interfaces.nsIDOMNode;
 import ca.forklabs.javaxpcom.Crawler;
 import ca.forklabs.javaxpcom.util.XPCOMConverter;
-import ca.forklabs.javaxpcom.util.XPCOMInspector;
+//import ca.forklabs.javaxpcom.util.XPCOMInspector;
 
 import static org.junit.Assert.assertEquals;
 
@@ -77,9 +77,9 @@ public class SelectorTest {
          Selector selector = new Selector(document);
          List<nsIDOMNode> children = selector.getAllChildren(document);
 
-         for (nsIDOMNode child : children) {
-            XPCOMInspector.inspect(child, false);
-            }
+//         for (nsIDOMNode child : children) {
+//            XPCOMInspector.inspect(child, false);
+//            }
 
          assertEquals(14, children.size());
 
@@ -151,47 +151,47 @@ public class SelectorTest {
          URL url = SelectorTest.class.getResource("/selector.input.html");
          crawler.navigateTo(url);
 
-         List<nsIDOMNode> buttons = crawler.selector().button().list();
+         List<nsIDOMNode> buttons = crawler.selector().add(Filters.button()).list();
          assertEquals(2, buttons.size());
          assertEquals("I am a button", XPCOMConverter.getAttributeValue(buttons.get(0), "value"));
          assertEquals("I am also a button", XPCOMConverter.asPlainText(buttons.get(1)));
 
-         List<nsIDOMNode> checkboxes = crawler.selector().checkbox().list();
+         List<nsIDOMNode> checkboxes = crawler.selector().add(Filters.checkbox()).list();
          assertEquals(1, checkboxes.size());
          assertEquals("I am a checkbox", XPCOMConverter.getAttributeValue(checkboxes.get(0), "value"));
 
-         List<nsIDOMNode> files = crawler.selector().file().list();
+         List<nsIDOMNode> files = crawler.selector().add(Filters.file()).list();
          assertEquals(1, files.size());
 
-         List<nsIDOMNode> hiddens = crawler.selector().hidden().list();
+         List<nsIDOMNode> hiddens = crawler.selector().add(Filters.hidden()).list();
          assertEquals(2, hiddens.size());
          assertEquals("I am hidden", XPCOMConverter.getAttributeValue(hiddens.get(0), "value"));
          assertEquals("I am hidden too", XPCOMConverter.getAttributeValue(hiddens.get(1), "value"));
 
-         List<nsIDOMNode> images = crawler.selector().image().list();
+         List<nsIDOMNode> images = crawler.selector().add(Filters.image()).list();
          assertEquals(1, images.size());
 
-         List<nsIDOMNode> inputs = crawler.selector().input().list();
+         List<nsIDOMNode> inputs = crawler.selector().add(Filters.input()).list();
          assertEquals(15, inputs.size());
 
-         List<nsIDOMNode> passwords = crawler.selector().password().list();
+         List<nsIDOMNode> passwords = crawler.selector().add(Filters.password()).list();
          assertEquals(1, passwords.size());
          assertEquals("Guess me!", XPCOMConverter.getAttributeValue(passwords.get(0), "value"));
 
-         List<nsIDOMNode> selects = crawler.selector().select().list();
+         List<nsIDOMNode> selects = crawler.selector().add(Filters.select()).list();
          assertEquals(1, selects.size());
          assertEquals(3L, selects.get(0).getChildNodes().getLength());
 
-         List<nsIDOMNode> submits = crawler.selector().submit().list();
+         List<nsIDOMNode> submits = crawler.selector().add(Filters.submit()).list();
          assertEquals(1, submits.size());
          assertEquals("Send this!", XPCOMConverter.getAttributeValue(submits.get(0), "value"));
 
-         List<nsIDOMNode> texts = crawler.selector().text().list();
+         List<nsIDOMNode> texts = crawler.selector().add(Filters.text()).list();
          assertEquals(2, texts.size());
          assertEquals("This is text", XPCOMConverter.getAttributeValue(texts.get(0), "value"));
          assertEquals("This is text too!", XPCOMConverter.getAttributeValue(texts.get(1), "value"));
 
-         List<nsIDOMNode> textareas = crawler.selector().textarea().list();
+         List<nsIDOMNode> textareas = crawler.selector().add(Filters.textarea()).list();
          assertEquals(1, textareas.size());
          assertEquals("This is even more text", XPCOMConverter.asPlainText(textareas.get(0)));
          }

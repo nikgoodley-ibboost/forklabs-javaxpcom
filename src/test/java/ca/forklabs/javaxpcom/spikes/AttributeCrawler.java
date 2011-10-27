@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import org.mozilla.interfaces.nsIDOMNode;
 import ca.forklabs.javaxpcom.Crawler;
+import ca.forklabs.javaxpcom.select.Filters;
 import ca.forklabs.javaxpcom.util.XPCOMConverter;
 
 /**
@@ -40,7 +41,7 @@ public class AttributeCrawler extends Crawler {
    // there at least a table in the header header of the project page
    // usually tbodies don't have attributes
       List<nsIDOMNode> tbodies = this.selector()
-                                     .element("tbody")
+                                     .add(Filters.element("tbody"))
                                      .list();
 
       System.out.println("There are " + tbodies.size() + " <tbody>");
@@ -64,7 +65,7 @@ public class AttributeCrawler extends Crawler {
    protected void anchors() {
    // anchors usually have one or more attributes
       List<nsIDOMNode> anchors = this.selector()
-                                     .element("a")
+                                     .add(Filters.element("a"))
                                      .list();
 
       System.out.println("There are " + anchors.size() + " <a>");

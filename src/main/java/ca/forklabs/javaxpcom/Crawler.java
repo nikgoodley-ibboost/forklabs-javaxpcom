@@ -42,7 +42,6 @@ import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIWebBrowser;
 import ca.forklabs.javaxpcom.select.Selector;
 import ca.forklabs.javaxpcom.util.XPCOMConverter;
-import ca.forklabs.javaxpcom.util.XPCOMConverterTest;
 import es.ladyr.ladyrbrowser.impl.DisplayManager;
 
 import java.io.InterruptedIOException;

@@ -28,6 +28,7 @@ import org.mozilla.interfaces.nsIDOMHTMLAnchorElement;
 import org.mozilla.interfaces.nsIDOMNode;
 //import org.mozilla.interfaces.nsIDOMNodeList;
 import ca.forklabs.javaxpcom.Crawler;
+import ca.forklabs.javaxpcom.select.Filters;
 
 import java.io.IOException;
 
@@ -107,8 +108,8 @@ public class ProjectPageCrawler extends Crawler {
 // This is the new way using the selector API
       System.out.println("=== Listing the menu using the selector mechanism ===");
       List<nsIDOMNode> anchors = this.selector()
-                                     .element("a")
-                                     .attribute("class", "tab")
+                                     .add(Filters.element("a"))
+                                     .add(Filters.attribute("class", "tab"))
                                      .list();
       for (nsIDOMNode node : anchors) {
          nsIDOMHTMLAnchorElement anchor = asAnchor(node);

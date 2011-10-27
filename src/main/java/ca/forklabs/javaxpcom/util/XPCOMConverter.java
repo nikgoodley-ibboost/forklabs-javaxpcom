@@ -130,6 +130,7 @@ public class XPCOMConverter {
    /**
     * Query the {@code nsIDOMHTMLElement} interface from the node.
     * @param   node   the node to convert.
+    * @return   the node as an HTML element.
     * @exception   XPCOMException   if the node is not an anchor.
     */
    public static nsIDOMHTMLElement asHTMLElement(nsIDOMNode node) {
@@ -141,6 +142,7 @@ public class XPCOMConverter {
    /**
     * Query the {@code nsIDOMHTMLAnchorElement} interface from the node.
     * @param   node   the node to convert.
+    * @return   the node as an anchor element.
     * @exception   XPCOMException   if the node is not an anchor.
     */
    public static nsIDOMHTMLAnchorElement asAnchor(nsIDOMNode node) {
@@ -151,6 +153,7 @@ public class XPCOMConverter {
    /**
     * Query the {@code nsIDOMHTMLDivElement} interface from the node.
     * @param   node   the node to convert.
+    * @return   the node as a div element.
     * @exception   XPCOMException   if the node is not a div.
     */
    public static nsIDOMHTMLDivElement asDiv(nsIDOMNode node) {
@@ -161,6 +164,7 @@ public class XPCOMConverter {
    /**
     * Query the {@code nsIDOMHTMLFormElement} interface from the node.
     * @param   node   the node to convert.
+    * @return   the node as a form element.
     * @exception   XPCOMException   if the node is not a form.
     */
    public static nsIDOMHTMLFormElement asForm(nsIDOMNode node) {
@@ -172,6 +176,7 @@ public class XPCOMConverter {
     * Query the {@code nsIDOMHTMLHeadingElement} interface ({@code <h1>} ...
     * {@code <h6>}) from the node.
     * @param   node   the node to convert.
+    * @return   the node as a header element.
     * @exception   XPCOMException   if the node is not a heading.
     */
    public static nsIDOMHTMLHeadingElement asHeading(nsIDOMNode node) {
@@ -182,6 +187,7 @@ public class XPCOMConverter {
    /**
     * Query the {@code nsIDOMHTMLInputElement} interface from the node.
     * @param   node   the node to convert.
+    * @return   the node as an input element.
     * @exception   XPCOMException   if the node is not an input.
     */
    public static nsIDOMHTMLInputElement asInput(nsIDOMNode node) {
@@ -192,6 +198,7 @@ public class XPCOMConverter {
    /**
     * Query the {@code nsIDOMHTMLTableElement} interface from the node.
     * @param   node   the node to convert.
+    * @return   the node as an table element.
     * @exception   XPCOMException   if the node is not a table.
     */
    public static nsIDOMHTMLTableElement asTable(nsIDOMNode node) {
@@ -203,6 +210,7 @@ public class XPCOMConverter {
     * Query the {@code nsIDOMHTMLTableCellElement} interface ({@code <th>} or
     * {@code <td>}) from the node.
     * @param   node   the node to convert.
+    * @return   the node as a table cell element.
     * @exception   XPCOMException   if the node is not a table cell.
     */
    public static nsIDOMHTMLTableCellElement asTableCell(nsIDOMNode node) {
@@ -213,6 +221,7 @@ public class XPCOMConverter {
    /**
     * Query the {@code nsIDOMHTMLTableRowElement} interface from the node.
     * @param   node   the node to convert.
+    * @return   the node as a table row element.
     * @exception   XPCOMException   if the node is not a table row.
     */
    public static nsIDOMHTMLTableRowElement asTableRow(nsIDOMNode node) {
@@ -224,6 +233,7 @@ public class XPCOMConverter {
     * Query the {@code nsIDOMText} interface from the node. Extracting the plain
     * inner text of a node should be done with {@link #asPlainText(nsIDOMNode)}.
     * @param   node   the node to convert.
+    * @return   the node as a text element.
     * @exception   XPCOMException   if the node is not a text node.
     * @see   #asPlainText(nsIDOMNode)
     */

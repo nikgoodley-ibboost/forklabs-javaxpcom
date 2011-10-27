@@ -131,6 +131,8 @@ public class Selector {
    /**
     * Makes a pre-order list of all the nodes under the given node. The first
     * node of the list is the given node.
+    * @param   node   the root node.
+    * @return   the list of the root with all its children nodes.
     */
    protected List<nsIDOMNode> getAllChildren(nsIDOMNode node) {
       List<nsIDOMNode> list = new LinkedList<nsIDOMNode>();

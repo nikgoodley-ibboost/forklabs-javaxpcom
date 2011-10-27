@@ -40,9 +40,9 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIWebBrowser;
-
 import ca.forklabs.javaxpcom.select.Selector;
 import ca.forklabs.javaxpcom.util.XPCOMConverter;
+import ca.forklabs.javaxpcom.util.XPCOMConverterTest;
 import es.ladyr.ladyrbrowser.impl.DisplayManager;
 
 import java.io.IOException;
@@ -392,7 +392,7 @@ public abstract class Crawler {
     * Gets the text of the node.
     * @param   node   the node.
     * @return   the text.
-    * @deprecated   use {@link XPCOMConverter#asPlainText(nsIDOMNode)}.
+    * @deprecated   use {@link XPCOMConverterTest#asPlainText(nsIDOMNode)}.
     */
    @Deprecated
    protected String getTextFrom(nsIDOMNode node) {

@@ -21,21 +21,27 @@
 package ca.forklabs.javaxpcom;
 
 import java.io.Console;
-import ca.forklabs.javaxpcom.Crawler;
-import ca.forklabs.javaxpcom.util.XPCOMConverter;
+import java.util.List;
 import org.eclipse.swt.widgets.Shell;
 import org.mozilla.interfaces.nsIDOMHTMLAnchorElement;
 //import org.mozilla.interfaces.nsIDOMHTMLDivElement;
 import org.mozilla.interfaces.nsIDOMNode;
 //import org.mozilla.interfaces.nsIDOMNodeList;
+import ca.forklabs.javaxpcom.Crawler;
+
+import java.io.IOException;
 
 //import static ca.forklabs.javaxpcom.util.XPCOMConverter.asDiv;
 import static ca.forklabs.javaxpcom.util.XPCOMConverter.asAnchor;
+import static ca.forklabs.javaxpcom.util.XPCOMConverter.asPlainText;
 //import static ca.forklabs.javaxpcom.util.XPCOMInspector.inspect;
 
-import java.io.IOException;
-import java.util.List;
-
+/**
+ * Class {@code ProjectPageCrawler} shows off how to make a basic crawler.
+ *
+ * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.ProjectPageCrawler">Daniel Léonard</a>
+ * @version $Revision$
+ */
 @SuppressWarnings("nls")
 public class ProjectPageCrawler extends Crawler {
 
@@ -43,6 +49,9 @@ public class ProjectPageCrawler extends Crawler {
 // Constructors
 //---------------------------
 
+   /**
+    * Constructor.
+    */
    public ProjectPageCrawler() {
    // nothing
       }
@@ -63,6 +72,11 @@ public class ProjectPageCrawler extends Crawler {
 // Instance methods
 //---------------------------
 
+   protected String exploreAnchor(nsIDOMHTMLAnchorElement anchor) {
+      String value = asPlainText(anchor);
+      return value;
+      }
+
 // <div id="mt" class="gtb">
 //   <a href="/p/forklabs-baselib/" class="tab active">Project&nbsp;Home</a>
 //   <a href="/p/forklabs-baselib/downloads/list" class="tab ">Downloads</a>
@@ -72,10 +86,6 @@ public class ProjectPageCrawler extends Crawler {
 //   <a href="/p/forklabs-baselib/admin" class="tab inactive">Administer</a>
 //   <div class="gtbc"></div>
 // </div>
-   protected String exploreAnchor(nsIDOMHTMLAnchorElement anchor) {
-      String value = XPCOMConverter.asPlainText(anchor);
-      return value;
-      }
 
    protected void exploreMainMenu() {
 // This is the old way
@@ -107,7 +117,7 @@ public class ProjectPageCrawler extends Crawler {
          }
       }
 
-   public void showOff() throws IOException, InterruptedException {
+   protected void showOff() throws IOException, InterruptedException {
       String url = "http://code.google.com/p/forklabs-javaxpcom/";
       this.navigateTo(url);
 
@@ -127,7 +137,12 @@ public class ProjectPageCrawler extends Crawler {
 // main()
 //---------------------------
 
-   public static void main(String... args) throws IOException, InterruptedException {
+   /**
+    * Entry point.
+    * @param   args   ignored
+    * @exception   Exception   if anything goes wrong.
+    */
+   public static void main(String... args) throws Exception {
    // Java needs to know where to find the XULRunner otherwise it doesn't work
       String gre_home = "./tools/xulrunner-1.9.0.13-sdk/bin";
       Crawler.setupXULRunner(gre_home);

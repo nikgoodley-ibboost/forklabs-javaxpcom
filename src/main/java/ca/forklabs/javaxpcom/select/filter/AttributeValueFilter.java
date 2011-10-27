@@ -22,9 +22,9 @@ package ca.forklabs.javaxpcom.select.filter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import ca.forklabs.javaxpcom.select.Selector;
+import ca.forklabs.javaxpcom.util.XPCOMConverter;
 
 /**
  * Class {@code AttributeValueFilter} filters nodes based on the value of their
@@ -128,20 +128,26 @@ public class AttributeValueFilter implements Selector.Filter {
    public boolean eval(nsIDOMNode node) {
       boolean evaluation = false;
 
-      boolean has_attribute = node.hasAttributes();
-      if (has_attribute) {
-         nsIDOMNamedNodeMap attributes = node.getAttributes();
-
+//      boolean has_attribute = node.hasAttributes();
+//      if (has_attribute) {
+//         nsIDOMNamedNodeMap attributes = node.getAttributes();
+//
+//         String name = this.getName();
+//         nsIDOMNode attribute = attributes.getNamedItem(name);
+//
+//         if (null != attribute) {
+//            Pattern pattern = this.getPattern();
+//            String value = attribute.getNodeValue();
+//            Matcher matcher = pattern.matcher(value);
+//            evaluation = matcher.find();
+//            }
          String name = this.getName();
-         nsIDOMNode attribute = attributes.getNamedItem(name);
-
-         if (null != attribute) {
-            Pattern pattern = this.getPattern();
-            String value = attribute.getNodeValue();
-            Matcher matcher = pattern.matcher(value);
+         String value = XPCOMConverter.getAttributeValue(node, name);
+         if (null != value) {
+            Matcher matcher = this.pattern.matcher(value);
             evaluation = matcher.find();
             }
-         }
+//         }
 
       return evaluation;
       }

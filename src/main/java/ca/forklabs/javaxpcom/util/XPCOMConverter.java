@@ -20,6 +20,8 @@
 
 package ca.forklabs.javaxpcom.util;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.mozilla.interfaces.nsIDOMHTMLAnchorElement;
 import org.mozilla.interfaces.nsIDOMHTMLDivElement;
 import org.mozilla.interfaces.nsIDOMHTMLElement;
@@ -29,6 +31,7 @@ import org.mozilla.interfaces.nsIDOMHTMLInputElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableCellElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableRowElement;
+import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMText;
@@ -36,10 +39,10 @@ import org.mozilla.interfaces.nsIDOMText;
 import org.mozilla.xpcom.XPCOMException;
 
 /**
- * Class {@code XPCOMConverter} is a rudimentary set of methods to convert from
+ * Class {@code XPCOMConverterTest} is a rudimentary set of methods to convert from
  * {@link nsIDOMNode}s to specialized nodes.
  *
- * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.util.XPCOMConverter">Daniel Léonard</a>
+ * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.util.XPCOMConverterTest">Daniel Léonard</a>
  * @version $Revision$
  */
 public class XPCOMConverter {
@@ -87,6 +90,42 @@ public class XPCOMConverter {
       return text;
       }
 
+   /**
+    * Creates a map of all the attributes of the node
+    * @param   node   the node.
+    * @return   the map of attributes.
+    */
+   public static Map<String, String> attributes(nsIDOMNode node) {
+      Map<String, String> attributes = new HashMap<String, String>();
+
+      nsIDOMNamedNodeMap node_map = node.getAttributes();
+      for (long l = 0, len = node_map.getLength(); l < len; l++) {
+         nsIDOMNode attribute = node_map.item(l);
+         String name = attribute.getNodeName();
+         String value = attribute.getNodeValue();
+         attributes.put(name, value);
+         }
+
+      return attributes;
+      }
+
+   /**
+    * Gets the value of a specific attribute.
+    * @param   node   the node.
+    * @param   name   the name of the attribute.
+    * @return   the value of the attribute if present, {@code null} otherwise.
+    */
+   public static String getAttributeValue(nsIDOMNode node, String name) {
+      String value = null;
+
+      nsIDOMNamedNodeMap attributes = node.getAttributes();
+      nsIDOMNode attribute = attributes.getNamedItem(name);
+      if (null != attribute) {
+         value = attribute.getNodeValue();
+         }
+
+      return value;
+      }
 
    /**
     * Query the {@code nsIDOMHTMLElement} interface from the node.

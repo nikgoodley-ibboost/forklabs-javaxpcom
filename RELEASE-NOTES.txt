@@ -1,6 +1,6 @@
 
 
-                      ForkLabs JavaXPCOM, Build 20111011
+                      ForkLabs JavaXPCOM, Build 2011XXXX
                                 Release Notes
 
 
@@ -30,7 +30,13 @@ LIMITATIONS
     * http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/
 
 
-NEW FEATURES IN VERSION 20111011
+NEW FEATURES IN VERSION 2011XXXX
+
+   o The Javadoc now links with the forklabs-baselib API.
+   o New shortcut methods in XPCOMConverter to access attributes of a node.
+
+
+VERSION 20111011
 
    o A new selector API has been added to select nodes in a document
      much more easily.

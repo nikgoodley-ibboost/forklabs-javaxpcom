@@ -20,15 +20,15 @@
 
 package ca.forklabs.javaxpcom.select;
 
+import java.net.URL;
 import java.util.List;
-import org.jmock.Expectations;
-import org.jmock.Mockery;
 import org.junit.Test;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.mozilla.interfaces.nsIDOMNodeList;
+import ca.forklabs.javaxpcom.Crawler;
+import ca.forklabs.javaxpcom.util.XPCOMConverter;
+import ca.forklabs.javaxpcom.util.XPCOMInspector;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 /**
  * Class {@code SelectorTest} tests class {@link Selector}.
@@ -36,7 +36,7 @@ import static org.junit.Assert.assertSame;
  * @author   <a href="mailto:forklabs at gmail.com?subject=ca.forklabs.javaxpcom.select.SelectorTest">Daniel Léonard</a>
  * @version $Revision$
  */
-@SuppressWarnings({ "boxing", "nls" })
+@SuppressWarnings("nls")
 public class SelectorTest {
 
 //---------------------------
@@ -55,107 +55,151 @@ public class SelectorTest {
 // Test methods
 //---------------------------
 
+   /**
+    * Tests that {@code Selector#getAllChildren(nsIDOMNode)} selects all the
+    * children.
+    * @throws   Exception   if anything goes wrong.
+    */
    @Test
-   public void testGetAllChildren() {
-      Mockery context = new Mockery();
+   public void testGetAllChildren() throws Exception {
+      String gre_home = "./tools/xulrunner-1.9.0.13-sdk/bin";
+      Crawler.setupXULRunner(gre_home);
 
-   // <p>This is <em>a simple</em> test <strong>with many children</strong></p>
-      final nsIDOMNode p = context.mock(nsIDOMNode.class, "p");
-      final nsIDOMNode text1 = context.mock(nsIDOMNode.class, "text1");
-      final nsIDOMNode em = context.mock(nsIDOMNode.class, "em");
-      final nsIDOMNode text2 = context.mock(nsIDOMNode.class, "text2");
-      final nsIDOMNode text3 = context.mock(nsIDOMNode.class, "text3");
-      final nsIDOMNode strong = context.mock(nsIDOMNode.class, "strong");
-      final nsIDOMNode text4 = context.mock(nsIDOMNode.class, "text4");
+      Crawler crawler = null;
+      try {
+         crawler = new Crawler() { /* nothing */ };
 
-      final nsIDOMNodeList p_children = context.mock(nsIDOMNodeList.class, "p_children");
-      final nsIDOMNodeList em_children = context.mock(nsIDOMNodeList.class, "em_children");
-      final nsIDOMNodeList strong_children = context.mock(nsIDOMNodeList.class, "strong_children");
+         URL url = SelectorTest.class.getResource("/select.all.children.html");
+         crawler.navigateTo(url);
 
-      context.checking(new Expectations() { {
-      // p
-         this.oneOf(p).hasChildNodes();
-         this.will(returnValue(true));
+         nsIDOMNode document = crawler.getDocument();
 
-         this.oneOf(p).getChildNodes();
-         this.will(returnValue(p_children));
+         Selector selector = new Selector(document);
+         List<nsIDOMNode> children = selector.getAllChildren(document);
 
-         this.oneOf(p_children).getLength();
-         this.will(returnValue(4L));
+         for (nsIDOMNode child : children) {
+            XPCOMInspector.inspect(child, false);
+            }
 
-         this.oneOf(p_children).item(0L);
-         this.will(returnValue(text1));
-         this.oneOf(p_children).item(1L);
-         this.will(returnValue(em));
-         this.oneOf(p_children).item(2L);
-         this.will(returnValue(text3));
-         this.oneOf(p_children).item(3L);
-         this.will(returnValue(strong));
+         assertEquals(14, children.size());
 
-      // text1
-         this.oneOf(text1).hasChildNodes();
-         this.will(returnValue(false));
+      // the document node, has one child <html>
+         assertEquals(9, children.get(0).getNodeType());
+         assertEquals(1, children.get(0).getChildNodes().getLength());
 
-         this.never(text1).getChildNodes();
+      // the html node, has two children <head>, <body>
+         assertEquals("HTML", children.get(1).getNodeName());
+         assertEquals(2, children.get(1).getChildNodes().getLength());
 
-      // em
-         this.oneOf(em).hasChildNodes();
-         this.will(returnValue(true));
+      // the head node, has one empty child #text
+         assertEquals("HEAD", children.get(2).getNodeName());
+         assertEquals(1, children.get(2).getChildNodes().getLength());
 
-         this.oneOf(em).getChildNodes();
-         this.will(returnValue(em_children));
+         assertEquals(3, children.get(3).getNodeType());
 
-         this.oneOf(em_children).getLength();
-         this.will(returnValue(1L));
+      // the body node, has three children, #text, <p>, #text
+         assertEquals("BODY", children.get(4).getNodeName());
+         assertEquals(3, children.get(4).getChildNodes().getLength());
 
-         this.oneOf(em_children).item(0L);
-         this.will(returnValue(text2));
+      // body -> #text
+         assertEquals(3, children.get(5).getNodeType());
 
-      // text2
-         this.oneOf(text2).hasChildNodes();
-         this.will(returnValue(false));
+      // body -> p, has four children, #text, <em>, #text, <strong>
+         assertEquals("P", children.get(6).getNodeName());
+         assertEquals(4, children.get(6).getChildNodes().getLength());
 
-         this.never(text2).getChildNodes();
+      // body -> p -> #text
+         assertEquals(3, children.get(7).getNodeType());
 
-      // text3
-         this.oneOf(text3).hasChildNodes();
-         this.will(returnValue(false));
+      // body -> p -> em, has one child, #text
+         assertEquals("EM", children.get(8).getNodeName());
+         assertEquals(1, children.get(8).getChildNodes().getLength());
 
-         this.never(text3).getChildNodes();
+      // body -> p -> em -> #text
+         assertEquals(3, children.get(9).getNodeType());
 
-      // strong
-         this.oneOf(strong).hasChildNodes();
-         this.will(returnValue(true));
+      // body -> p -> #text
+         assertEquals(3, children.get(10).getNodeType());
 
-         this.oneOf(strong).getChildNodes();
-         this.will(returnValue(strong_children));
+      // body -> p -> strong, has one child, #text
+         assertEquals("STRONG", children.get(11).getNodeName());
+         assertEquals(1, children.get(11).getChildNodes().getLength());
 
-         this.oneOf(strong_children).getLength();
-         this.will(returnValue(1L));
+      // body -> p -> strong -> #text
+         assertEquals(3, children.get(12).getNodeType());
+         }
+      finally {
+         if (null != crawler) {
+            crawler.teardown();
+            }
+         }
+      }
 
-         this.oneOf(strong_children).item(0L);
-         this.will(returnValue(text4));
+   /**
+    * Tests that the input selectors select the correct nodes.
+    * @throws   Exception   if anything goes wrong.
+    */
+   @Test
+   public void testInputSelectors() throws Exception {
+      String gre_home = "./tools/xulrunner-1.9.0.13-sdk/bin";
+      Crawler.setupXULRunner(gre_home);
 
-      // text4
-         this.oneOf(text4).hasChildNodes();
-         this.will(returnValue(false));
+      Crawler crawler = null;
+      try {
+         crawler = new Crawler() { /* nothing */ };
 
-         this.never(text4).getChildNodes();
-         }});
+         URL url = SelectorTest.class.getResource("/selector.input.html");
+         crawler.navigateTo(url);
 
-      Selector selector = new Selector(p);
-      List<nsIDOMNode> nodes = selector.getAllChildren(p);
+         List<nsIDOMNode> buttons = crawler.selector().button().list();
+         assertEquals(2, buttons.size());
+         assertEquals("I am a button", XPCOMConverter.getAttributeValue(buttons.get(0), "value"));
+         assertEquals("I am also a button", XPCOMConverter.asPlainText(buttons.get(1)));
 
-      assertEquals(7, nodes.size());
-      assertSame(p, nodes.get(0));
-      assertSame(text1, nodes.get(1));
-      assertSame(em, nodes.get(2));
-      assertSame(text2, nodes.get(3));
-      assertSame(text3, nodes.get(4));
-      assertSame(strong, nodes.get(5));
-      assertSame(text4, nodes.get(6));
+         List<nsIDOMNode> checkboxes = crawler.selector().checkbox().list();
+         assertEquals(1, checkboxes.size());
+         assertEquals("I am a checkbox", XPCOMConverter.getAttributeValue(checkboxes.get(0), "value"));
 
-      context.assertIsSatisfied();
+         List<nsIDOMNode> files = crawler.selector().file().list();
+         assertEquals(1, files.size());
+
+         List<nsIDOMNode> hiddens = crawler.selector().hidden().list();
+         assertEquals(2, hiddens.size());
+         assertEquals("I am hidden", XPCOMConverter.getAttributeValue(hiddens.get(0), "value"));
+         assertEquals("I am hidden too", XPCOMConverter.getAttributeValue(hiddens.get(1), "value"));
+
+         List<nsIDOMNode> images = crawler.selector().image().list();
+         assertEquals(1, images.size());
+
+         List<nsIDOMNode> inputs = crawler.selector().input().list();
+         assertEquals(15, inputs.size());
+
+         List<nsIDOMNode> passwords = crawler.selector().password().list();
+         assertEquals(1, passwords.size());
+         assertEquals("Guess me!", XPCOMConverter.getAttributeValue(passwords.get(0), "value"));
+
+         List<nsIDOMNode> selects = crawler.selector().select().list();
+         assertEquals(1, selects.size());
+         assertEquals(3L, selects.get(0).getChildNodes().getLength());
+
+         List<nsIDOMNode> submits = crawler.selector().submit().list();
+         assertEquals(1, submits.size());
+         assertEquals("Send this!", XPCOMConverter.getAttributeValue(submits.get(0), "value"));
+
+         List<nsIDOMNode> texts = crawler.selector().text().list();
+         assertEquals(2, texts.size());
+         assertEquals("This is text", XPCOMConverter.getAttributeValue(texts.get(0), "value"));
+         assertEquals("This is text too!", XPCOMConverter.getAttributeValue(texts.get(1), "value"));
+
+         List<nsIDOMNode> textareas = crawler.selector().textarea().list();
+         assertEquals(1, textareas.size());
+         assertEquals("This is even more text", XPCOMConverter.asPlainText(textareas.get(0)));
+         }
+      finally {
+         if (null != crawler) {
+            crawler.teardown();
+            }
+         }
       }
 
    }

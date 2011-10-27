@@ -21,7 +21,7 @@
 package ca.forklabs.javaxpcom;
 
 import java.io.File;
-import java.io.InterruptedIOException;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
@@ -45,6 +45,7 @@ import ca.forklabs.javaxpcom.util.XPCOMConverter;
 import ca.forklabs.javaxpcom.util.XPCOMConverterTest;
 import es.ladyr.ladyrbrowser.impl.DisplayManager;
 
+import java.io.InterruptedIOException;
 import java.io.IOException;
 
 /**
@@ -210,6 +211,8 @@ public abstract class Crawler {
     * @param   unit   the time unit of the {@code timeout} argument.
     * @return   {@code true} if the count reached zero, {@code false} if the
     *           waiting time elapsed before the count reached zero.
+    * @throws   InterruptedException   if the thread is interrupted when waiting
+    *                                  on the latch.
     * @see   CountDownLatch#await(long, TimeUnit)
     */
    @SuppressWarnings("hiding")
@@ -281,6 +284,15 @@ public abstract class Crawler {
       this.waitForPageToLoad();
       }
 
+   /**
+    * Navigates to the specified URL and waits for the page to load.
+    * @param   url   the url.
+    * @throws   IOException   if the page fails to load.
+    */
+   public void navigateTo(URL url) throws IOException {
+      this.navigateTo(url.toString());
+      }
+
 
 //---------------------------
 // DOM methods
@@ -333,6 +345,7 @@ public abstract class Crawler {
 
    /**
     * Creates a selector on the specified node and its children.
+    * @param   root   the root node.
     * @return   the selector.
     */
    public Selector selector(nsIDOMNode root) {
@@ -392,7 +405,7 @@ public abstract class Crawler {
     * Gets the text of the node.
     * @param   node   the node.
     * @return   the text.
-    * @deprecated   use {@link XPCOMConverterTest#asPlainText(nsIDOMNode)}.
+    * @deprecated   use {@link XPCOMConverter#asPlainText(nsIDOMNode)}.
     */
    @Deprecated
    protected String getTextFrom(nsIDOMNode node) {

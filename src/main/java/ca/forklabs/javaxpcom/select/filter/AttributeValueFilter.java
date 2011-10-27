@@ -128,26 +128,12 @@ public class AttributeValueFilter implements Selector.Filter {
    public boolean eval(nsIDOMNode node) {
       boolean evaluation = false;
 
-//      boolean has_attribute = node.hasAttributes();
-//      if (has_attribute) {
-//         nsIDOMNamedNodeMap attributes = node.getAttributes();
-//
-//         String name = this.getName();
-//         nsIDOMNode attribute = attributes.getNamedItem(name);
-//
-//         if (null != attribute) {
-//            Pattern pattern = this.getPattern();
-//            String value = attribute.getNodeValue();
-//            Matcher matcher = pattern.matcher(value);
-//            evaluation = matcher.find();
-//            }
-         String name = this.getName();
-         String value = XPCOMConverter.getAttributeValue(node, name);
-         if (null != value) {
-            Matcher matcher = this.pattern.matcher(value);
-            evaluation = matcher.find();
-            }
-//         }
+      String name = this.getName();
+      String value = XPCOMConverter.getAttributeValue(node, name);
+      if (null != value) {
+         Matcher matcher = this.pattern.matcher(value);
+         evaluation = matcher.find();
+         }
 
       return evaluation;
       }

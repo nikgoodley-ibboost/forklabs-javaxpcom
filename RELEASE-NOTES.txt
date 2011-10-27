@@ -34,6 +34,8 @@ NEW FEATURES IN VERSION 2011XXXX
 
    o The Javadoc now links with the forklabs-baselib API.
    o New shortcut methods in XPCOMConverter to access attributes of a node.
+   o The crawler now accepts URL objects for navigation.
+   o More filters for the selector.
 
 
 VERSION 20111011

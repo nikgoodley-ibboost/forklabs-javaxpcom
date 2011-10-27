@@ -99,11 +99,13 @@ public class XPCOMConverter {
       Map<String, String> attributes = new HashMap<String, String>();
 
       nsIDOMNamedNodeMap node_map = node.getAttributes();
-      for (long l = 0, len = node_map.getLength(); l < len; l++) {
-         nsIDOMNode attribute = node_map.item(l);
-         String name = attribute.getNodeName();
-         String value = attribute.getNodeValue();
-         attributes.put(name, value);
+      if (null != node_map) {
+         for (long l = 0, len = node_map.getLength(); l < len; l++) {
+            nsIDOMNode attribute = node_map.item(l);
+            String name = attribute.getNodeName();
+            String value = attribute.getNodeValue();
+            attributes.put(name, value);
+            }
          }
 
       return attributes;
@@ -119,9 +121,11 @@ public class XPCOMConverter {
       String value = null;
 
       nsIDOMNamedNodeMap attributes = node.getAttributes();
-      nsIDOMNode attribute = attributes.getNamedItem(name);
-      if (null != attribute) {
-         value = attribute.getNodeValue();
+      if (null != attributes) {
+         nsIDOMNode attribute = attributes.getNamedItem(name);
+         if (null != attribute) {
+            value = attribute.getNodeValue();
+            }
          }
 
       return value;

@@ -1,6 +1,6 @@
 
 
-                      ForkLabs JavaXPCOM, Build 2011XXXX
+                      ForkLabs JavaXPCOM, Build 2012XXXX
                                 Release Notes
 
 
@@ -30,12 +30,13 @@ LIMITATIONS
     * http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/
 
 
-NEW FEATURES IN VERSION 2011XXXX
+NEW FEATURES IN VERSION 2012XXXX
 
    o The Javadoc now links with the forklabs-baselib API.
    o New shortcut methods in XPCOMConverter to access attributes of a node.
    o The crawler now accepts URL objects for navigation.
    o The selector now works with class Filters to creates its filters.
+   o The selector can now easily return a single node.
    o Many new filters
 
 

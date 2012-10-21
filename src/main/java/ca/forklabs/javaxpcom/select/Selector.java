@@ -195,8 +195,29 @@ public class Selector {
 
 
 //---------------------------
-// list()
+// get() and list()
 //---------------------------
+
+   /**
+    * Filters all the children nodes and returns the first node that match the
+    * filters. This should be used when you are confident the filter will only
+    * get a single node, such as when using {@link Filters#id(String)}
+    * @return   the first node that match the filters, or {@code null} if the
+    *           selection is the empty set.
+    */
+   @SuppressWarnings("hiding")
+   public nsIDOMNode get() {
+      nsIDOMNode root = this.getRoot();
+      List<nsIDOMNode> candidates = this.getAllChildren(root);
+
+      List<UnaryPredicate<nsIDOMNode>> filters = this.getFilters();
+      for (UnaryPredicate<nsIDOMNode> filter : filters) {
+         Algorithm.removeIf(candidates, Predicates.not1(filter));
+         }
+
+      nsIDOMNode candidate = (0 != candidates.size()) ? candidates.get(0) : null;
+      return candidate;
+      }
 
    /**
     * Filters all the children nodes and returns the list of nodes that match

@@ -243,4 +243,35 @@ public class SelectorTest {
          }
       }
 
+   /**
+    * Tests that get works.
+    * @throws   Exception   if anything goes wrong.
+    */
+   @Test
+   public void testGet() throws Exception {
+      String gre_home = "./tools/xulrunner-1.9.0.13-sdk/bin";
+      Crawler.setupXULRunner(gre_home);
+
+      Crawler crawler = null;
+      try {
+         crawler = new Crawler() { /* nothing */ };
+
+         URL url = SelectorTest.class.getResource("/basic.html");
+         crawler.navigateTo(url);
+
+         List<nsIDOMNode> css = crawler.selector().add(Filters.css("target")).list();
+         assertEquals(2, css.size());
+         assertEquals("H3", css.get(0).getNodeName());
+         assertEquals("H6", css.get(1).getNodeName());
+
+         nsIDOMNode node = crawler.selector().add(Filters.css("target")).get();
+         assertEquals("H3", node.getNodeName());
+         }
+      finally {
+         if (null != crawler) {
+            crawler.teardown();
+            }
+         }
+      }
+
    }

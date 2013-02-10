@@ -50,7 +50,7 @@ import java.io.IOException;
 /**
  * Class {@code Crawler} provides a skeleton to build web crawlers using
  * Mozilla and SWT.
- *
+ * <p>
  * This crawler gives access to a {@link Browser} object inside a simple
  * {@link Shell} that can be interacted with to navigate the web and access the
  * underlying {@link nsIDOMDocument}.
@@ -399,6 +399,53 @@ public abstract class Crawler {
             }
          });
       }
+
+   /**
+    * Enables Javascript. Javascript is enabled by default.
+    */
+   public void enableJavascript() {
+      this.runOnSWTThread(new Runnable() {
+         @Override
+         @SuppressWarnings("hiding")
+         public void run() {
+            Browser browser = Crawler.this.getBrowser();
+            browser.setJavascriptEnabled(true);
+            }
+         });
+      }
+
+   /**
+    * Disables Javascript.
+    */
+   public void disableJavascript() {
+      this.runOnSWTThread(new Runnable() {
+         @Override
+         @SuppressWarnings("hiding")
+         public void run() {
+            Browser browser = Crawler.this.getBrowser();
+            browser.setJavascriptEnabled(false);
+            }
+         });
+      }
+
+   /**
+    * Determines is Javascript is enabled.
+    * @return   {@code true} if Javascript is enabled, {@code false} otherwise.
+    */
+   public boolean isJavascriptEnabled() {
+      final boolean[] bs = new boolean[1];
+      this.runOnSWTThread(new Runnable() {
+         @Override
+         @SuppressWarnings("hiding")
+         public void run() {
+            Browser browser = Crawler.this.getBrowser();
+            bs[0] = browser.getJavascriptEnabled();
+            }
+         });
+      boolean is_javascript_enabled = bs[0];
+      return is_javascript_enabled;
+      }
+
 
    /**
     * Gets the text of the node.

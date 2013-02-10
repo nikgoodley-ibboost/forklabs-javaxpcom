@@ -38,6 +38,7 @@ NEW FEATURES IN VERSION 2012XXXX
    o The selector now works with class Filters to creates its filters.
    o The selector can now easily return a single node.
    o Many new filters
+   o Completed enhancement #12: it is possible to enable, disable Javascript.
 
 
 VERSION 20111011

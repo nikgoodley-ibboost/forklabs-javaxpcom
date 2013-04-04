@@ -1,6 +1,6 @@
 
 
-                      ForkLabs JavaXPCOM, Build 2012XXXX
+                      ForkLabs JavaXPCOM, Build 20130404
                                 Release Notes
 
 
@@ -30,7 +30,7 @@ LIMITATIONS
     * http://releases.mozilla.org/pub/mozilla.org/xulrunner/releases/
 
 
-NEW FEATURES IN VERSION 2012XXXX
+NEW FEATURES IN VERSION 20130404
 
    o The Javadoc now links with the forklabs-baselib API.
    o New shortcut methods in XPCOMConverter to access attributes of a node.

@@ -27,6 +27,7 @@ import org.mozilla.interfaces.nsIDOMHTMLDivElement;
 import org.mozilla.interfaces.nsIDOMHTMLElement;
 import org.mozilla.interfaces.nsIDOMHTMLFormElement;
 import org.mozilla.interfaces.nsIDOMHTMLHeadingElement;
+import org.mozilla.interfaces.nsIDOMHTMLImageElement;
 import org.mozilla.interfaces.nsIDOMHTMLInputElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableCellElement;
 import org.mozilla.interfaces.nsIDOMHTMLTableElement;
@@ -231,6 +232,17 @@ public class XPCOMConverter {
    public static nsIDOMHTMLTableRowElement asTableRow(nsIDOMNode node) {
       nsIDOMHTMLTableRowElement row = (nsIDOMHTMLTableRowElement) node.queryInterface(nsIDOMHTMLTableRowElement.NS_IDOMHTMLTABLEROWELEMENT_IID);
       return row;
+      }
+
+   /**
+    * Query the {@code nsIDOMHTMLImageElement} interface from the node.
+    * @param   node   the node to convert.
+    * @return   the node as an image element.
+    * @exception   XPCOMException   if the node is not an image.
+    */
+   public static nsIDOMHTMLImageElement asImage(nsIDOMNode node) {
+      nsIDOMHTMLImageElement image = (nsIDOMHTMLImageElement) node.queryInterface(nsIDOMHTMLImageElement.NS_IDOMHTMLIMAGEELEMENT_IID);
+      return image;
       }
 
    /**
